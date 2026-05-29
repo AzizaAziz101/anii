@@ -34,30 +34,23 @@
 
     html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
 
-    /* ── App shell ── */
     .app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-    /* ── Header ── */
+    /* Header */
     .header {
       display: flex; align-items: center; gap: 10px;
       padding: 0 28px; height: 52px;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
+      border-bottom: 1px solid var(--border); flex-shrink: 0;
     }
-    .logo {
-      width: 26px; height: 26px; border-radius: 6px;
-      background: var(--accent);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700; color: #fff;
-    }
+    .logo { width: 26px; height: 26px; border-radius: 6px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; }
     .header-name { font-size: 14px; font-weight: 600; letter-spacing: -.02em; }
-    .header-sep { color: var(--muted-2); font-size: 13px; }
+    .header-sep { color: var(--muted-2); }
     .header-tag { font-size: 12px; color: var(--muted); }
 
-    /* ── Workspace ── */
+    /* Workspace */
     .workspace { display: flex; flex: 1; overflow: hidden; }
 
-    /* ── Input panel ── */
+    /* Input panel */
     .panel-input {
       width: 360px; flex-shrink: 0;
       border-right: 1px solid var(--border);
@@ -66,40 +59,25 @@
       scrollbar-width: thin; scrollbar-color: var(--muted-2) transparent;
     }
 
-    .field-label {
-      font-size: 11px; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .08em;
-      color: var(--muted); margin-bottom: 7px;
-    }
+    .field-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 7px; }
 
     .desc-textarea {
       width: 100%; min-height: 148px; max-height: 260px;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; padding: 11px 13px;
-      color: var(--text); font-family: 'Inter', sans-serif;
-      font-size: 13px; line-height: 1.65; resize: vertical; outline: none;
-      transition: border-color .15s;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 11px 13px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.65;
+      resize: vertical; outline: none; transition: border-color .15s;
     }
     .desc-textarea:focus { border-color: var(--accent); }
     .desc-textarea::placeholder { color: var(--muted); }
 
     .char-hint { font-size: 11px; color: var(--muted-2); text-align: right; margin-top: 4px; }
 
-    /* Toggle group */
-    .toggle-group {
-      display: flex; background: var(--surface);
-      border: 1px solid var(--border); border-radius: 7px; padding: 3px; gap: 2px;
-    }
-    .toggle-btn {
-      flex: 1; padding: 6px 10px; border-radius: 5px; border: 1px solid transparent;
-      background: transparent; color: var(--muted);
-      font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 500;
-      cursor: pointer; transition: all .14s;
-    }
+    .toggle-group { display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 3px; gap: 2px; }
+    .toggle-btn { flex: 1; padding: 6px 10px; border-radius: 5px; border: 1px solid transparent; background: transparent; color: var(--muted); font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 500; cursor: pointer; transition: all .14s; }
     .toggle-btn.active { background: var(--surface-2); color: var(--text); border-color: var(--border-h); }
     .toggle-btn:hover:not(.active) { color: var(--text); }
 
-    /* Generate button */
     .gen-btn {
       width: 100%; padding: 11px; border-radius: 8px; border: none;
       background: var(--accent); color: #fff;
@@ -112,103 +90,52 @@
     .gen-btn:active:not(:disabled) { transform: scale(.98); }
     .gen-btn:disabled { opacity: .38; cursor: not-allowed; }
 
-    .spinner {
-      width: 14px; height: 14px; border-radius: 50%;
-      border: 2px solid rgba(255,255,255,.28); border-top-color: #fff;
-      animation: spin .65s linear infinite; display: none;
-    }
-    .gen-btn.loading .spinner { display: block; }
+    .btn-spinner { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.28); border-top-color: #fff; animation: spin .65s linear infinite; display: none; }
+    .gen-btn.loading .btn-spinner { display: block; }
     .gen-btn.loading .btn-label { display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Example chips */
     .examples { display: flex; flex-direction: column; gap: 5px; }
-    .example-chip {
-      padding: 8px 10px; border-radius: 6px;
-      background: var(--surface); border: 1px solid var(--border);
-      font-size: 12px; color: var(--muted); cursor: pointer;
-      line-height: 1.55; transition: color .14s, border-color .14s, background .14s;
-    }
+    .example-chip { padding: 8px 10px; border-radius: 6px; background: var(--surface); border: 1px solid var(--border); font-size: 12px; color: var(--muted); cursor: pointer; line-height: 1.55; transition: color .14s, border-color .14s, background .14s; }
     .example-chip:hover { color: var(--text); border-color: var(--border-h); background: var(--surface-h); }
 
-    /* ── Output panel ── */
+    /* Output panel */
     .panel-output { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
 
-    /* State wrappers */
     .state { display: none; flex-direction: column; height: 100%; }
     .state.active { display: flex; }
 
-    /* ── Idle ── */
-    .idle-body {
-      flex: 1; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center; padding: 40px; gap: 10px;
-    }
-    .idle-icon {
-      width: 54px; height: 54px; border-radius: 14px;
-      background: var(--accent-dim); border: 1px solid rgba(124,58,237,.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; margin-bottom: 8px;
-    }
+    /* Idle */
+    .idle-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; gap: 10px; }
+    .idle-icon { width: 54px; height: 54px; border-radius: 14px; background: var(--accent-dim); border: 1px solid rgba(124,58,237,.2); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 8px; }
     .idle-body h2 { font-size: 17px; font-weight: 600; letter-spacing: -.02em; }
     .idle-body p { font-size: 13px; color: var(--muted); max-width: 400px; line-height: 1.65; }
 
-    .pipeline {
-      display: flex; margin-top: 24px;
-      background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
-    }
-    .pip-step {
-      flex: 1; padding: 13px 14px; text-align: center;
-      border-right: 1px solid var(--border);
-    }
+    .pipeline { display: flex; margin-top: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .pip-step { flex: 1; padding: 13px 14px; text-align: center; border-right: 1px solid var(--border); }
     .pip-step:last-child { border-right: none; }
     .pip-icon { font-size: 15px; margin-bottom: 5px; }
     .pip-label { font-size: 12px; font-weight: 500; margin-bottom: 2px; }
     .pip-desc { font-size: 11px; color: var(--muted); }
 
-    /* ── Running ── */
-    .running-body {
-      flex: 1; overflow-y: auto; padding: 24px 28px;
-      display: flex; flex-direction: column; gap: 16px;
-      scrollbar-width: thin; scrollbar-color: var(--muted-2) transparent;
-    }
+    /* Running */
+    .running-body { flex: 1; overflow-y: auto; padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; scrollbar-width: thin; scrollbar-color: var(--muted-2) transparent; }
 
     .run-header { display: flex; align-items: flex-start; gap: 12px; }
-    .run-spinner {
-      width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; margin-top: 1px;
-      border: 2px solid var(--muted-2); border-top-color: var(--accent);
-      animation: spin .65s linear infinite;
-    }
+    .run-spinner { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; margin-top: 1px; border: 2px solid var(--muted-2); border-top-color: var(--accent); animation: spin .65s linear infinite; }
     .run-title { font-size: 14px; font-weight: 600; letter-spacing: -.02em; }
     .run-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-    /* Loop card */
-    .loop-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
-    }
-    .loop-card-head {
-      padding: 10px 14px; border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .loop-pill {
-      background: var(--accent-dim); color: #a78bfa;
-      border: 1px solid rgba(124,58,237,.25); border-radius: 5px;
-      padding: 2px 8px; font-size: 11px; font-weight: 600; letter-spacing: .02em;
-    }
+    .loop-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .loop-card-head { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .loop-pill { background: var(--accent-dim); color: #a78bfa; border: 1px solid rgba(124,58,237,.25); border-radius: 5px; padding: 2px 8px; font-size: 11px; font-weight: 600; letter-spacing: .02em; }
     .loop-score { font-size: 13px; font-weight: 700; }
 
-    .loop-card-body { padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
+    .loop-card-body { padding: 10px 14px; display: flex; flex-direction: column; gap: 5px; }
 
-    /* Stage row */
     .stage-row { display: flex; align-items: center; gap: 10px; font-size: 12.5px; padding: 3px 0; }
-    .stage-ind {
-      width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700;
-    }
-    .stage-ind.spin {
-      border: 2px solid var(--muted-2); border-top-color: var(--accent);
-      animation: spin .65s linear infinite;
-    }
+    .stage-ind { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+    .stage-ind.spin { border: 2px solid var(--muted-2); border-top-color: var(--accent); animation: spin .65s linear infinite; }
     .stage-ind.done { background: rgba(34,197,94,.12); color: var(--green); border: 1px solid rgba(34,197,94,.22); }
     .stage-ind.wait { background: var(--surface-2); border: 1px solid var(--border); color: var(--muted-2); }
 
@@ -216,101 +143,47 @@
     .stage-name.dim { color: var(--muted); }
     .stage-score { font-size: 12px; font-weight: 700; width: 32px; text-align: right; }
 
-    /* Score colors */
     .c-green { color: var(--green); }
     .c-yellow { color: var(--yellow); }
     .c-red { color: var(--red); }
 
-    /* ── Done ── */
-    .done-topbar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 11px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0;
-    }
+    /* Done */
+    .done-topbar { display: flex; align-items: center; justify-content: space-between; padding: 11px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
     .done-left { display: flex; align-items: center; gap: 10px; }
-    .done-score-badge {
-      padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 600;
-      border: 1px solid transparent;
-    }
+    .done-score-badge { padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 600; border: 1px solid transparent; }
     .done-title-text { font-size: 13px; font-weight: 600; letter-spacing: -.02em; }
-
     .done-actions { display: flex; align-items: center; gap: 7px; }
 
-    .icon-btn {
-      display: flex; align-items: center; gap: 5px;
-      padding: 5px 11px; border-radius: 6px;
-      background: var(--surface); border: 1px solid var(--border);
-      color: var(--muted); font-family: 'Inter', sans-serif; font-size: 12px;
-      cursor: pointer; transition: color .14s, border-color .14s;
-      white-space: nowrap;
-    }
+    .icon-btn { display: flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 6px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer; transition: color .14s, border-color .14s; white-space: nowrap; }
     .icon-btn:hover { color: var(--text); border-color: var(--border-h); }
     .icon-btn.copied { color: var(--green); border-color: rgba(34,197,94,.3); }
 
-    /* File tabs */
-    .file-tabs {
-      display: flex; gap: 1px; padding: 9px 20px 0;
-      border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto;
-      scrollbar-width: none;
-    }
+    .file-tabs { display: flex; gap: 1px; padding: 9px 20px 0; border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto; scrollbar-width: none; }
     .file-tabs::-webkit-scrollbar { display: none; }
-    .file-tab {
-      padding: 5px 13px; border-radius: 6px 6px 0 0;
-      border: 1px solid transparent; border-bottom: none;
-      font-size: 12px; font-family: 'JetBrains Mono', monospace;
-      color: var(--muted); cursor: pointer; white-space: nowrap;
-      transition: color .14s, background .14s;
-    }
-    .file-tab.active {
-      background: var(--code-bg); color: var(--text);
-      border-color: var(--border); border-bottom-color: var(--code-bg);
-      margin-bottom: -1px;
-    }
+    .file-tab { padding: 5px 13px; border-radius: 6px 6px 0 0; border: 1px solid transparent; border-bottom: none; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--muted); cursor: pointer; white-space: nowrap; transition: color .14s, background .14s; }
+    .file-tab.active { background: var(--code-bg); color: var(--text); border-color: var(--border); border-bottom-color: var(--code-bg); margin-bottom: -1px; }
     .file-tab:hover:not(.active) { color: var(--text); }
 
-    /* File panels */
     .file-panels { flex: 1; position: relative; overflow: hidden; }
     .file-panel { display: none; flex-direction: column; position: absolute; inset: 0; }
     .file-panel.active { display: flex; }
 
-    .code-bar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 7px 18px; background: var(--surface);
-      border-bottom: 1px solid var(--border); flex-shrink: 0;
-    }
+    .code-bar { display: flex; align-items: center; justify-content: space-between; padding: 7px 18px; background: var(--surface); border-bottom: 1px solid var(--border); flex-shrink: 0; }
     .code-fname { font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--muted); }
 
     .code-scroll { flex: 1; overflow: auto; background: var(--code-bg); }
-    .code-scroll pre {
-      margin: 0; padding: 18px 22px;
-      font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      font-size: 12.5px; line-height: 1.72;
-    }
+    .code-scroll pre { margin: 0; padding: 18px 22px; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 1.72; }
     .code-scroll code { font-family: inherit; }
     .hljs { background: transparent !important; padding: 0 !important; }
 
-    /* ── Error ── */
-    .error-body {
-      flex: 1; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center; padding: 40px; gap: 10px;
-    }
-    .error-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2);
-      display: flex; align-items: center; justify-content: center; font-size: 20px;
-      margin-bottom: 6px;
-    }
+    /* Error */
+    .error-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; gap: 10px; }
+    .error-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px; }
     .error-body h3 { font-size: 15px; font-weight: 600; }
     .error-body p { font-size: 13px; color: var(--muted); max-width: 380px; line-height: 1.65; }
-    .retry-btn {
-      margin-top: 6px; padding: 8px 18px; border-radius: 7px;
-      background: var(--surface); border: 1px solid var(--border);
-      color: var(--muted); font-family: 'Inter', sans-serif; font-size: 13px;
-      cursor: pointer; transition: color .14s, border-color .14s;
-    }
+    .retry-btn { margin-top: 6px; padding: 8px 18px; border-radius: 7px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-family: 'Inter', sans-serif; font-size: 13px; cursor: pointer; transition: color .14s, border-color .14s; }
     .retry-btn:hover { color: var(--text); border-color: var(--border-h); }
 
-    /* ── Responsive ── */
     @media (max-width: 780px) {
       .workspace { flex-direction: column; overflow-y: auto; }
       .panel-input { width: 100%; border-right: none; border-bottom: 1px solid var(--border); overflow-y: visible; }
@@ -325,8 +198,6 @@
 <body>
 
 <div class="app">
-
-  <!-- Header -->
   <header class="header">
     <div class="logo">W</div>
     <span class="header-name">WebForge</span>
@@ -336,9 +207,8 @@
 
   <div class="workspace">
 
-    <!-- ═══ INPUT PANEL ═══ -->
+    <!-- Input panel -->
     <div class="panel-input">
-
       <div>
         <div class="field-label">Website beschreiben</div>
         <textarea class="desc-textarea" id="descInput" rows="6"
@@ -352,8 +222,8 @@ z.B. Dunkles Portfolio für einen Fotografen — Hero mit Fullscreen-Bild, Galer
       <div>
         <div class="field-label">CSS Framework</div>
         <div class="toggle-group">
-          <button class="toggle-btn active" data-g="css" data-v="css" onclick="pick('css',this)">Vanilla CSS</button>
-          <button class="toggle-btn"        data-g="css" data-v="tailwind" onclick="pick('css',this)">Tailwind CSS</button>
+          <button class="toggle-btn active" data-g="css"   data-v="css"      onclick="pick('css',this)">Vanilla CSS</button>
+          <button class="toggle-btn"        data-g="css"   data-v="tailwind"  onclick="pick('css',this)">Tailwind CSS</button>
         </div>
       </div>
 
@@ -366,7 +236,7 @@ z.B. Dunkles Portfolio für einen Fotografen — Hero mit Fullscreen-Bild, Galer
       </div>
 
       <button class="gen-btn" id="genBtn" onclick="generate()">
-        <div class="spinner"></div>
+        <div class="btn-spinner"></div>
         <span class="btn-label">✦ &nbsp;Website generieren</span>
       </button>
 
@@ -379,41 +249,37 @@ z.B. Dunkles Portfolio für einen Fotografen — Hero mit Fullscreen-Bild, Galer
           <div class="example-chip" onclick="useExample(this)">Restaurant-Website mit interaktivem Menü, Reservierungsformular, Foto-Galerie und Standortkarte</div>
         </div>
       </div>
-
     </div>
 
-    <!-- ═══ OUTPUT PANEL ═══ -->
+    <!-- Output panel -->
     <div class="panel-output">
 
-      <!-- Idle -->
       <div class="state active" id="stateIdle">
         <div class="idle-body">
           <div class="idle-icon">✦</div>
           <h2>Dein KI-Webentwickler</h2>
-          <p>Beschreibe deine Website links und klick auf Generieren. Der Agent erstellt den Code und optimiert ihn in bis zu 3 Runden mit 5 Reviewern.</p>
+          <p>Beschreibe deine Website links und klick auf Generieren. Der Agent erstellt den Code und optimiert ihn in bis zu 3 Runden — mit 5 parallelen Reviewern.</p>
           <div class="pipeline">
             <div class="pip-step"><div class="pip-icon">⚡</div><div class="pip-label">Code erstellen</div><div class="pip-desc">Komplett + responsive</div></div>
-            <div class="pip-step"><div class="pip-icon">🔍</div><div class="pip-label">5 Reviews</div><div class="pip-desc">UX · Security · SEO …</div></div>
+            <div class="pip-step"><div class="pip-icon">🔍</div><div class="pip-label">5 Reviews parallel</div><div class="pip-desc">UX · Security · SEO …</div></div>
             <div class="pip-step"><div class="pip-icon">🔄</div><div class="pip-label">Optimieren</div><div class="pip-desc">Bis Score ≥ 88 / 100</div></div>
             <div class="pip-step"><div class="pip-icon">✓</div><div class="pip-label">Ausgabe</div><div class="pip-desc">Fertiger Quellcode</div></div>
           </div>
         </div>
       </div>
 
-      <!-- Running -->
       <div class="state" id="stateRunning">
         <div class="running-body" id="runBody">
           <div class="run-header">
             <div class="run-spinner"></div>
             <div>
-              <div class="run-title" id="runTitle">Generierung startet…</div>
-              <div class="run-sub"  id="runSub"></div>
+              <div class="run-title" id="runTitle">Startet…</div>
+              <div class="run-sub"   id="runSub"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Done -->
       <div class="state" id="stateDone">
         <div class="done-topbar">
           <div class="done-left">
@@ -432,7 +298,6 @@ z.B. Dunkles Portfolio für einen Fotografen — Hero mit Fullscreen-Bild, Galer
         <div class="file-panels" id="filePanels"></div>
       </div>
 
-      <!-- Error -->
       <div class="state" id="stateError">
         <div class="error-body">
           <div class="error-icon">⚠</div>
@@ -447,14 +312,24 @@ z.B. Dunkles Portfolio für einen Fotografen — Hero mit Fullscreen-Bild, Galer
 </div>
 
 <script>
+/* ── Config ── */
+const REVIEWERS = [
+  { name: 'UX/UI',        weight: 0.30 },
+  { name: 'Security',     weight: 0.25 },
+  { name: 'Code Quality', weight: 0.20 },
+  { name: 'SEO',          weight: 0.15 },
+  { name: 'Excellence',   weight: 0.10 },
+];
+
 /* ── State ── */
-let cssMode   = 'css';
-let pageMode  = 'single';
-let files     = {};
-let genDone   = false;
+let cssMode  = 'css';
+let pageMode = 'single';
+let files    = {};
 
 /* ── Helpers ── */
-const $ = (id) => document.getElementById(id);
+const $    = (id) => document.getElementById(id);
+const sid  = (s)  => s.replace(/[^a-zA-Z0-9]/g, '_');
+const scCls = (s) => s >= 88 ? 'c-green' : s >= 68 ? 'c-yellow' : 'c-red';
 
 function setState(name) {
   ['Idle','Running','Done','Error'].forEach(s =>
@@ -462,24 +337,19 @@ function setState(name) {
   );
 }
 
-function scoreClass(s) {
-  return s >= 88 ? 'c-green' : s >= 68 ? 'c-yellow' : 'c-red';
+function setHeader(title, sub) {
+  const t = $('runTitle'), s = $('runSub');
+  if (t) t.textContent = title;
+  if (s) s.textContent = sub;
 }
 
-function safeId(str) {
-  return str.replace(/[^a-zA-Z0-9]/g, '_');
-}
-
-/* ── Input handlers ── */
-function onInput(el) {
-  $('charCount').textContent = el.value.length;
-}
+/* ── Input ── */
+function onInput(el) { $('charCount').textContent = el.value.length; }
 
 function pick(group, btn) {
   document.querySelectorAll(`[data-g="${group}"]`).forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  if (group === 'css')   cssMode  = btn.dataset.v;
-  else                   pageMode = btn.dataset.v;
+  if (group === 'css') cssMode = btn.dataset.v; else pageMode = btn.dataset.v;
 }
 
 function useExample(el) {
@@ -491,20 +361,134 @@ function useExample(el) {
 
 function reset() {
   setState('idle');
-  $('genBtn').disabled = false;
-  $('genBtn').classList.remove('loading');
+  const btn = $('genBtn');
+  btn.disabled = false;
+  btn.classList.remove('loading');
 }
 
-/* ── Generate ── */
+/* ── API calls ── */
+
+async function callGenerateCode(description, feedback) {
+  const res = await fetch('/api/generate-code', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ description, cssMode, pageMode, feedback }),
+  });
+  if (!res.ok) throw new Error(`generate-code ${res.status}`);
+
+  const reader = res.body.getReader();
+  const dec    = new TextDecoder();
+  let   buf    = '';
+
+  return new Promise((resolve, reject) => {
+    (async () => {
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) { reject(new Error('Stream ended without result')); return; }
+
+          buf += dec.decode(value, { stream: true });
+          const lines = buf.split('\n');
+          buf = lines.pop();
+
+          for (const line of lines) {
+            if (!line.startsWith('data: ')) continue;
+            const raw = line.slice(6).trim();
+            if (!raw) continue;
+            try {
+              const ev = JSON.parse(raw);
+              if (ev.type === 'files') { resolve(ev.files); return; }
+              if (ev.type === 'error') { reject(new Error(ev.message)); return; }
+              // 'tick' events are ignored — they just keep the connection alive
+            } catch (_) {}
+          }
+        }
+      } catch (err) { reject(err); }
+    })();
+  });
+}
+
+async function callReview(fileMap, description, reviewer) {
+  try {
+    const res = await fetch('/api/review-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ files: fileMap, description, reviewer }),
+    });
+    if (!res.ok) return { score: 72, critical_issues: [], suggestions: [] };
+    return await res.json();
+  } catch (_) {
+    return { score: 72, critical_issues: [], suggestions: [] };
+  }
+}
+
+/* ── Loop card UI ── */
+
+function createLoopCard(loop, total) {
+  const card = document.createElement('div');
+  card.className = 'loop-card';
+  card.id = `lcard${loop}`;
+  card.innerHTML = `
+    <div class="loop-card-head">
+      <span class="loop-pill">Loop ${loop} / ${total}</span>
+      <span class="loop-score" id="lscore${loop}"></span>
+    </div>
+    <div class="loop-card-body" id="lbody${loop}">
+      <div class="stage-row" id="genRow${loop}">
+        <div class="stage-ind spin" id="genInd${loop}"></div>
+        <span class="stage-name dim" id="genLabel${loop}">Code wird generiert…</span>
+      </div>
+    </div>`;
+  $('runBody').appendChild(card);
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  return card;
+}
+
+function markGenDone(loop) {
+  const ind = $(`genInd${loop}`);
+  const lbl = $(`genLabel${loop}`);
+  if (ind) { ind.className = 'stage-ind done'; ind.textContent = '✓'; }
+  if (lbl) { lbl.textContent = 'Code generiert'; lbl.classList.remove('dim'); }
+}
+
+function addReviewRows(loop) {
+  const body = $(`lbody${loop}`);
+  REVIEWERS.forEach(rev => {
+    const row = document.createElement('div');
+    row.className = 'stage-row';
+    row.id = `rrow_${loop}_${sid(rev.name)}`;
+    row.innerHTML = `
+      <div class="stage-ind spin" id="rind_${loop}_${sid(rev.name)}"></div>
+      <span class="stage-name dim">${rev.name}</span>
+      <span class="stage-score" id="rscore_${loop}_${sid(rev.name)}">—</span>`;
+    body.appendChild(row);
+  });
+}
+
+function markReviewDone(loop, reviewer, score) {
+  const key = `${loop}_${sid(reviewer)}`;
+  const ind  = $(`rind_${key}`);
+  const scEl = $(`rscore_${key}`);
+  const row  = $(`rrow_${key}`);
+  if (ind)  { ind.className = 'stage-ind done'; ind.textContent = '✓'; }
+  if (scEl) { scEl.textContent = score; scEl.className = `stage-score ${scCls(score)}`; }
+  if (row)  { row.querySelector('.stage-name').classList.remove('dim'); }
+}
+
+function showLoopScore(loop, score) {
+  const el = $(`lscore${loop}`);
+  if (el) { el.textContent = `${score} / 100`; el.className = `loop-score ${scCls(score)}`; }
+}
+
+/* ── Main generate ── */
 async function generate() {
-  const desc = $('descInput').value.trim();
-  if (!desc) { $('descInput').focus(); return; }
+  const description = $('descInput').value.trim();
+  if (!description) { $('descInput').focus(); return; }
 
   const btn = $('genBtn');
   btn.disabled = true;
   btn.classList.add('loading');
-  files     = {};
-  genDone   = false;
+  files = {};
 
   // Reset running panel
   $('runBody').innerHTML = `
@@ -518,38 +502,51 @@ async function generate() {
 
   setState('running');
 
-  const loopCards = {};
-
   try {
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ description: desc, cssMode, pageMode }),
-    });
+    let feedback    = [];
+    let bestScore   = 0;
+    let bestFiles   = null;
 
-    if (!res.ok) throw new Error(`Server-Fehler ${res.status}`);
+    for (let loop = 1; loop <= 3; loop++) {
+      // ── Phase 1: Code generieren ──
+      setHeader(`Loop ${loop} / 3 — Code generieren`, 'Claude schreibt deinen Code…');
+      createLoopCard(loop, 3);
 
-    const reader = res.body.getReader();
-    const dec    = new TextDecoder();
-    let   buf    = '';
+      const generatedFiles = await callGenerateCode(description, feedback);
+      markGenDone(loop);
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buf += dec.decode(value, { stream: true });
-      const lines = buf.split('\n');
-      buf = lines.pop();
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        const raw = line.slice(6).trim();
-        if (!raw) continue;
-        try { handleEvent(JSON.parse(raw), loopCards); } catch (_) {}
+      // ── Phase 2: 5 Reviews parallel ──
+      setHeader(`Loop ${loop} / 3 — Reviews laufen`, '5 Experten prüfen gleichzeitig…');
+      addReviewRows(loop);
+
+      const reviewResults = await Promise.all(
+        REVIEWERS.map(async (rev) => {
+          const result = await callReview(generatedFiles, description, rev.name);
+          markReviewDone(loop, rev.name, result.score);
+          return result;
+        })
+      );
+
+      // ── Phase 3: Score berechnen ──
+      const score = Math.round(
+        REVIEWERS.reduce((sum, rev, i) => sum + reviewResults[i].score * rev.weight, 0)
+      );
+      showLoopScore(loop, score);
+
+      if (score > bestScore) { bestScore = score; bestFiles = generatedFiles; }
+
+      if (score >= 88 || loop === 3) {
+        setHeader(`Fertig — Score: ${bestScore} / 100`, `${loop} Loop${loop > 1 ? 's' : ''} · Bestes Ergebnis wird ausgegeben`);
+        showResult(bestFiles, bestScore, loop);
+        break;
       }
-    }
 
-    if (!genDone) {
-      $('errMsg').textContent = 'Die Verbindung wurde unterbrochen. Bitte erneut versuchen.';
-      setState('error');
+      // Feedback für nächsten Loop
+      setHeader(`Loop ${loop} abgeschlossen — Score: ${score}`, 'Starte nächsten Optimierungsdurchlauf…');
+      feedback = [...new Set(reviewResults.flatMap(r => r.critical_issues || []))].slice(0, 8);
+
+      // Kurze Pause damit der User den Score sieht
+      await new Promise(r => setTimeout(r, 600));
     }
 
   } catch (err) {
@@ -561,103 +558,11 @@ async function generate() {
   }
 }
 
-/* ── Event handler ── */
-function handleEvent(ev, loopCards) {
-  if (ev.type === 'progress') {
-    const { loop, total, stage, reviewer } = ev;
-
-    if (!loopCards[loop]) {
-      const card = document.createElement('div');
-      card.className = 'loop-card';
-      card.innerHTML = `
-        <div class="loop-card-head">
-          <span class="loop-pill">Loop ${loop} / ${total}</span>
-          <span class="loop-score" id="lscore${loop}"></span>
-        </div>
-        <div class="loop-card-body" id="lbody${loop}">
-          <div class="stage-row" id="genRow${loop}">
-            <div class="stage-ind spin" id="genInd${loop}"></div>
-            <span class="stage-name dim">Code wird generiert…</span>
-          </div>
-        </div>`;
-      $('runBody').appendChild(card);
-      loopCards[loop] = card;
-      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    if (stage === 'generating') {
-      setRunHeader(`Loop ${loop} — Code generieren`, `Durchlauf ${loop} von ${total}`);
-    }
-
-    if (stage === 'reviewing') {
-      // Mark generation done
-      const gi = $(`genInd${loop}`);
-      if (gi && gi.classList.contains('spin')) {
-        gi.className = 'stage-ind done';
-        gi.textContent = '✓';
-        gi.closest('.stage-row').querySelector('.stage-name').textContent = 'Code generiert';
-        gi.closest('.stage-row').querySelector('.stage-name').classList.remove('dim');
-      }
-
-      setRunHeader(`Loop ${loop} — Review: ${reviewer}`, 'Qualitätsprüfung läuft…');
-
-      const rowId = `rrow_${loop}_${safeId(reviewer)}`;
-      if (!$(rowId)) {
-        const row = document.createElement('div');
-        row.className = 'stage-row';
-        row.id = rowId;
-        row.innerHTML = `
-          <div class="stage-ind spin" id="rind_${safeId(reviewer)}${loop}"></div>
-          <span class="stage-name dim">${reviewer}</span>
-          <span class="stage-score" id="rscore_${safeId(reviewer)}${loop}">—</span>`;
-        $(`lbody${loop}`).appendChild(row);
-        row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
-    }
-  }
-
-  else if (ev.type === 'review_result') {
-    const { loop, reviewer, score } = ev;
-    const sid = safeId(reviewer);
-    const ind  = $(`rind_${sid}${loop}`);
-    const scEl = $(`rscore_${sid}${loop}`);
-    if (ind)  { ind.className = 'stage-ind done'; ind.textContent = '✓'; }
-    if (scEl) {
-      scEl.textContent = score;
-      scEl.className   = `stage-score ${scoreClass(score)}`;
-      const row = scEl.closest('.stage-row');
-      if (row) row.querySelector('.stage-name').classList.remove('dim');
-    }
-  }
-
-  else if (ev.type === 'loop_score') {
-    const { loop, score } = ev;
-    const el = $(`lscore${loop}`);
-    if (el) { el.textContent = `${score} / 100`; el.className = `loop-score ${scoreClass(score)}`; }
-    setRunHeader(`Loop ${loop} abgeschlossen — Score: ${score}`, score >= 88 ? '✓ Ziel erreicht!' : 'Nächster Optimierungsdurchlauf…');
-  }
-
-  else if (ev.type === 'done') {
-    genDone = true;
-    files   = ev.files;
-    showResult(ev.files, ev.finalScore, ev.loops);
-  }
-
-  else if (ev.type === 'error') {
-    $('errMsg').textContent = ev.message;
-    setState('error');
-  }
-}
-
-function setRunHeader(title, sub) {
-  const t = $('runTitle'), s = $('runSub');
-  if (t) t.textContent = title;
-  if (s) s.textContent = sub;
-}
-
 /* ── Show result ── */
 function showResult(fileMap, score, loops) {
-  const badge = $('doneBadge');
+  files = fileMap;
+
+  const badge  = $('doneBadge');
   const isGood = score >= 88, isMid = score >= 68;
   badge.textContent = `Score ${score} · ${loops} Loop${loops !== 1 ? 's' : ''}`;
   badge.style.cssText = isGood
@@ -671,37 +576,34 @@ function showResult(fileMap, score, loops) {
   tabsEl.innerHTML   = '';
   panelsEl.innerHTML = '';
 
-  const names = Object.keys(fileMap);
   const extLang = { html:'html', css:'css', js:'javascript', json:'json', ts:'typescript', md:'markdown' };
+  const names   = Object.keys(fileMap);
 
   names.forEach((name, i) => {
-    const sid = safeId(name);
+    const id   = sid(name);
+    const ext  = name.split('.').pop().toLowerCase();
+    const lang = extLang[ext] || 'plaintext';
 
     // Tab
     const tab = document.createElement('div');
-    tab.className    = `file-tab${i === 0 ? ' active' : ''}`;
+    tab.className = `file-tab${i === 0 ? ' active' : ''}`;
     tab.textContent  = name;
     tab.dataset.file = name;
-    tab.onclick      = () => switchTab(name);
+    tab.onclick = () => switchTab(name);
     tabsEl.appendChild(tab);
 
     // Panel
-    const ext  = name.split('.').pop().toLowerCase();
-    const lang = extLang[ext] || 'plaintext';
     let highlighted;
-    try {
-      highlighted = hljs.highlight(fileMap[name], { language: lang }).value;
-    } catch (_) {
-      highlighted = fileMap[name].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
+    try { highlighted = hljs.highlight(fileMap[name], { language: lang }).value; }
+    catch (_) { highlighted = fileMap[name].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
     const panel = document.createElement('div');
     panel.className = `file-panel${i === 0 ? ' active' : ''}`;
-    panel.id        = `fp_${sid}`;
+    panel.id = `fp_${id}`;
     panel.innerHTML = `
       <div class="code-bar">
         <span class="code-fname">${name}</span>
-        <button class="icon-btn" id="cpbtn_${sid}" onclick="copyFile('${name}','${sid}')">
+        <button class="icon-btn" id="cpbtn_${id}" onclick="copyFile('${name}','${id}')">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           Kopieren
         </button>
@@ -713,46 +615,35 @@ function showResult(fileMap, score, loops) {
   setState('done');
 }
 
-/* ── Tab switch ── */
 function switchTab(name) {
-  const sid = safeId(name);
-  document.querySelectorAll('.file-tab').forEach(t =>
-    t.classList.toggle('active', t.dataset.file === name)
-  );
-  document.querySelectorAll('.file-panel').forEach(p =>
-    p.classList.toggle('active', p.id === `fp_${sid}`)
-  );
+  const id = sid(name);
+  document.querySelectorAll('.file-tab').forEach(t => t.classList.toggle('active', t.dataset.file === name));
+  document.querySelectorAll('.file-panel').forEach(p => p.classList.toggle('active', p.id === `fp_${id}`));
 }
 
 /* ── Copy ── */
-async function copyFile(name, sid) {
+async function copyFile(name, id) {
   try {
     await navigator.clipboard.writeText(files[name]);
-    const btn = $(`cpbtn_${sid}`);
+    const btn = $(`cpbtn_${id}`);
     if (btn) {
+      const orig = btn.innerHTML;
       btn.classList.add('copied');
       btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Kopiert`;
-      setTimeout(() => {
-        btn.classList.remove('copied');
-        btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Kopieren`;
-      }, 1800);
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 1800);
     }
   } catch (_) {}
 }
 
 async function copyAll() {
-  const text = Object.entries(files)
-    .map(([n, c]) => `========== ${n} ==========\n${c}`)
-    .join('\n\n');
+  const text = Object.entries(files).map(([n, c]) => `========== ${n} ==========\n${c}`).join('\n\n');
   try {
     await navigator.clipboard.writeText(text);
     const btn = $('copyAllBtn');
+    const orig = btn.innerHTML;
     btn.classList.add('copied');
     btn.textContent = '✓ Kopiert';
-    setTimeout(() => {
-      btn.classList.remove('copied');
-      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Alle kopieren`;
-    }, 1800);
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 1800);
   } catch (_) {}
 }
 </script>
