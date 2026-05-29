@@ -368,11 +368,11 @@ function reset() {
 
 /* ── API calls ── */
 
-async function callGenerateCode(description, feedback) {
+async function callGenerateCode(description, feedback, previousFiles) {
   const res = await fetch('/api/generate-code', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ description, cssMode, pageMode, feedback }),
+    body: JSON.stringify({ description, cssMode, pageMode, feedback, previousFiles: previousFiles || null }),
   });
   if (!res.ok) throw new Error(`generate-code ${res.status}`);
 
@@ -503,16 +503,18 @@ async function generate() {
   setState('running');
 
   try {
-    let feedback    = [];
-    let bestScore   = 0;
-    let bestFiles   = null;
+    let feedback      = [];
+    let bestScore     = 0;
+    let bestFiles     = null;
+    let previousFiles = null;
 
     for (let loop = 1; loop <= 3; loop++) {
       // ── Phase 1: Code generieren ──
-      setHeader(`Loop ${loop} / 3 — Code generieren`, 'Claude schreibt deinen Code…');
+      const genLabel = loop === 1 ? 'Claude schreibt deinen Code…' : 'Claude verbessert den Code gezielt…';
+      setHeader(`Loop ${loop} / 3 — Code generieren`, genLabel);
       createLoopCard(loop, 3);
 
-      const generatedFiles = await callGenerateCode(description, feedback);
+      const generatedFiles = await callGenerateCode(description, feedback, previousFiles);
       markGenDone(loop);
 
       // ── Phase 2: 5 Reviews parallel ──
@@ -533,6 +535,7 @@ async function generate() {
       );
       showLoopScore(loop, score);
 
+      previousFiles = generatedFiles; // always pass this loop's code to the next
       if (score > bestScore) { bestScore = score; bestFiles = generatedFiles; }
 
       if (score >= 88 || loop === 3) {

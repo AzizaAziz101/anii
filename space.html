@@ -1,56 +1,190 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RocketDrive GmbH – Raketenproduzenten</title>
-  <meta name="description" content="RocketDrive GmbH – Innovativer Hersteller von Raketentriebwerken und Antriebssystemen für kommerzielle und wissenschaftliche Raumfahrt." />
+  <title>SpaceVenture — Die Zukunft der privaten Raumfahrt</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            space: {
-              900: '#020817',
-              800: '#0a1628',
-              700: '#0f2240',
-              600: '#1a3a5c',
-            },
-            rocket: {
-              400: '#f97316',
-              500: '#ea580c',
-              600: '#c2410c',
-            },
-            accent: {
-              400: '#38bdf8',
-              500: '#0ea5e9',
-              600: '#0284c7',
-            }
+            cosmos: '#04060f',
+            nebula: '#0a0e1a',
+            orbit: '#111827',
+            starlight: '#e8eaf6',
+            aurora: '#7c3aed',
+            plasma: '#06b6d4',
+            solar: '#f59e0b',
+            nova: '#f97316',
           },
           fontFamily: {
-            sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            sans: ['Sora', 'sans-serif'],
           },
           animation: {
-            'float': 'float 6s ease-in-out infinite',
-            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'spin-slow': 'spin 20s linear infinite',
+            float: 'float 6s ease-in-out infinite',
+            pulse_glow: 'pulseGlow 3s ease-in-out infinite',
+            counter: 'countUp 2s ease-out forwards',
+            orbit_slow: 'orbitSpin 20s linear infinite',
           },
           keyframes: {
             float: {
-              '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-20px)' },
-            }
-          }
-        }
-      }
-    }
+              '0%,100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-24px)' },
+            },
+            pulseGlow: {
+              '0%,100%': { boxShadow: '0 0 20px rgba(124,58,237,0.4)' },
+              '50%': { boxShadow: '0 0 50px rgba(124,58,237,0.8), 0 0 80px rgba(6,182,212,0.3)' },
+            },
+            orbitSpin: {
+              '0%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(360deg)' },
+            },
+          },
+        },
+      },
+    };
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    html { scroll-behavior: smooth; }
-    * { box-sizing: border-box; }
+    :root {
+      --color-bg: #04060f;
+      --color-surface: #0a0e1a;
+      --color-border: rgba(124,58,237,0.2);
+      --color-text: #e8eaf6;
+      --color-muted: #8892b0;
+      --color-accent: #7c3aed;
+      --color-accent-2: #06b6d4;
+    }
 
-    /* Reveal animations */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Sora', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* STAR FIELD BACKGROUND */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 40%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 55%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 85%, rgba(255,255,255,0.45) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* GLASSMORPHISM */
+    .glass {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .glass-strong {
+      background: rgba(124,58,237,0.07);
+      border: 1px solid rgba(124,58,237,0.2);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    /* GRADIENT TEXT */
+    .gradient-text {
+      background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-aurora {
+      background: linear-gradient(135deg, #a78bfa 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* HERO BACKGROUND */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,58,237,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 90% 50%, rgba(6,182,212,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 50% at 10% 80%, rgba(245,158,11,0.08) 0%, transparent 50%),
+        #04060f;
+    }
+
+    /* SECTION BACKGROUNDS */
+    .section-bg-1 {
+      background:
+        radial-gradient(ellipse 70% 50% at 20% 50%, rgba(124,58,237,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 50%, rgba(6,182,212,0.06) 0%, transparent 50%),
+        #0a0e1a;
+    }
+
+    .section-bg-2 {
+      background:
+        radial-gradient(ellipse 60% 60% at 70% 30%, rgba(245,158,11,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 20% 70%, rgba(124,58,237,0.08) 0%, transparent 50%),
+        #04060f;
+    }
+
+    /* GLOW BUTTON */
+    .btn-glow {
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      box-shadow: 0 0 20px rgba(124,58,237,0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #06b6d4, #7c3aed);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .btn-glow:hover::before { opacity: 1; }
+    .btn-glow:hover {
+      box-shadow: 0 0 40px rgba(124,58,237,0.7), 0 0 80px rgba(6,182,212,0.3);
+      transform: translateY(-2px);
+    }
+    .btn-glow span { position: relative; z-index: 1; }
+
+    .btn-outline {
+      border: 1px solid rgba(124,58,237,0.5);
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover {
+      border-color: rgba(124,58,237,1);
+      background: rgba(124,58,237,0.1);
+      box-shadow: 0 0 20px rgba(124,58,237,0.3);
+    }
+
+    /* CARD HOVER */
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(124,58,237,0.2), 0 8px 20px rgba(0,0,0,0.5);
+      border-color: rgba(124,58,237,0.4) !important;
+    }
+
+    /* SCROLL REVEAL */
     .reveal {
       opacity: 0;
       transform: translateY(40px);
@@ -60,377 +194,380 @@
       opacity: 1;
       transform: translateY(0);
     }
-    .reveal-left {
-      opacity: 0;
-      transform: translateX(-40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal-left.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    .reveal-right {
-      opacity: 0;
-      transform: translateX(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal-right.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
 
-    /* Hamburger menu animation */
+    /* NAVBAR SCROLL */
+    .navbar-scrolled {
+      background: rgba(4,6,15,0.85) !important;
+      backdrop-filter: blur(20px) !important;
+      border-bottom: 1px solid rgba(124,58,237,0.2) !important;
+    }
+
+    /* PLANET VISUAL */
+    .planet {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%,
+        rgba(124,58,237,0.8) 0%,
+        rgba(6,182,212,0.4) 40%,
+        rgba(4,6,15,0.9) 100%);
+      box-shadow:
+        0 0 60px rgba(124,58,237,0.5),
+        0 0 120px rgba(124,58,237,0.2),
+        inset 0 0 60px rgba(0,0,0,0.5);
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .planet-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotateX(75deg);
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      border: 2px solid rgba(6,182,212,0.3);
+      box-shadow: 0 0 20px rgba(6,182,212,0.2);
+    }
+
+    .planet-ring-2 {
+      width: 560px;
+      height: 560px;
+      border-color: rgba(124,58,237,0.15);
+    }
+
+    /* ORBIT ANIMATION */
+    .orbit-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .orbit-path {
+      border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,0.1);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotateX(75deg);
+      animation: orbitSpin 20s linear infinite;
+    }
+
+    .orbit-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #06b6d4;
+      box-shadow: 0 0 10px rgba(6,182,212,0.8);
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* STATS COUNTER */
+    .stat-number {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent-2);
+    }
+
+    /* TIMELINE */
+    .timeline-line {
+      width: 2px;
+      background: linear-gradient(180deg, #7c3aed 0%, #06b6d4 50%, transparent 100%);
+    }
+
+    /* HAMBURGER */
     .hamburger-bar {
-      display: block;
-      width: 25px;
-      height: 3px;
-      background-color: white;
-      border-radius: 3px;
-      transition: transform 0.35s ease, opacity 0.35s ease, width 0.35s ease;
+      width: 24px;
+      height: 2px;
+      background: var(--color-text);
+      transition: all 0.3s ease;
       transform-origin: center;
     }
-    .hamburger-open .bar1 {
-      transform: translateY(9px) rotate(45deg);
-    }
-    .hamburger-open .bar2 {
-      opacity: 0;
-      transform: scaleX(0);
-    }
-    .hamburger-open .bar3 {
-      transform: translateY(-9px) rotate(-45deg);
-    }
 
-    /* Stars background */
-    .stars-bg {
-      background-image:
-        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.8) 0%, transparent 100%),
-        radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.6) 0%, transparent 100%),
-        radial-gradient(1px 1px at 50% 70%, rgba(255,255,255,0.7) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 10% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
-        radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.6) 0%, transparent 100%),
-        radial-gradient(1px 1px at 35% 85%, rgba(255,255,255,0.7) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 65% 20%, rgba(255,255,255,0.5) 0%, transparent 100%),
-        radial-gradient(1px 1px at 75% 90%, rgba(255,255,255,0.6) 0%, transparent 100%),
-        radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
-        radial-gradient(2px 2px at 55% 55%, rgba(255,255,255,0.3) 0%, transparent 100%);
-    }
+    .hamburger.open .bar1 { transform: translateY(8px) rotate(45deg); }
+    .hamburger.open .bar2 { opacity: 0; transform: scaleX(0); }
+    .hamburger.open .bar3 { transform: translateY(-8px) rotate(-45deg); }
 
-    /* Gradient text */
-    .gradient-text {
-      background: linear-gradient(135deg, #f97316, #38bdf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Glow effect */
-    .glow-orange {
-      box-shadow: 0 0 30px rgba(249,115,22,0.4), 0 0 60px rgba(249,115,22,0.2);
-    }
-    .glow-blue {
-      box-shadow: 0 0 30px rgba(56,189,248,0.3), 0 0 60px rgba(56,189,248,0.1);
-    }
-
-    /* Nav scroll effect */
-    #navbar {
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
-    }
-    #navbar.scrolled {
-      background-color: rgba(2, 8, 23, 0.95);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
-    }
-
-    /* Card hover */
-    .product-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .product-card:hover {
-      transform: translateY(-8px);
-    }
-
-    /* Timeline dot pulse */
-    .timeline-dot {
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(249,115,22,0.4); }
-      50% { box-shadow: 0 0 0 8px rgba(249,115,22,0); }
-    }
-
-    /* Flame animation */
-    @keyframes flame {
-      0%, 100% { height: 40px; opacity: 0.9; }
-      50% { height: 55px; opacity: 1; }
-    }
-    .flame {
-      animation: flame 0.8s ease-in-out infinite;
-    }
-
-    /* Form focus */
-    .form-input:focus {
-      outline: none;
-      border-color: #f97316;
-      box-shadow: 0 0 0 3px rgba(249,115,22,0.2);
-    }
-
-    /* Scroll indicator */
-    @keyframes bounce-arrow {
-      0%, 100% { transform: translateY(0) translateX(-50%); }
-      50% { transform: translateY(8px) translateX(-50%); }
-    }
-    .bounce-arrow {
-      animation: bounce-arrow 1.5s ease-in-out infinite;
-    }
-
-    /* Orbital ring */
-    @keyframes orbit {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .orbit-ring {
-      animation: orbit 15s linear infinite;
-    }
-    .orbit-ring-reverse {
-      animation: orbit 25s linear infinite reverse;
-    }
-
-    /* Mobile menu */
-    #mobile-menu {
-      transition: max-height 0.4s ease, opacity 0.4s ease;
+    /* MOBILE MENU */
+    .mobile-menu {
       max-height: 0;
-      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .mobile-menu.open { max-height: 500px; }
+
+    /* COMPANY COLOR BADGES */
+    .spacex-badge { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+    .blueorigin-badge { background: linear-gradient(135deg, #1e3a5f, #0284c7); }
+    .virgin-badge { background: linear-gradient(135deg, #dc2626, #f97316); }
+    .rocketlab-badge { background: linear-gradient(135deg, #0d9488, #06b6d4); }
+    .relativity-badge { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+    .sierra-badge { background: linear-gradient(135deg, #065f46, #10b981); }
+
+    /* PROGRESS BAR */
+    .progress-bar {
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.1);
       overflow: hidden;
     }
-    #mobile-menu.open {
-      max-height: 400px;
-      opacity: 1;
+    .progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1.5s ease 0.5s;
     }
 
-    /* Success message */
-    #form-success {
-      display: none;
+    /* FORM STYLES */
+    .form-input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(124,58,237,0.2);
+      color: var(--color-text);
+      transition: all 0.3s ease;
+      font-family: 'Sora', sans-serif;
     }
-    #form-success.show {
-      display: flex;
+    .form-input:focus {
+      outline: none;
+      border-color: rgba(124,58,237,0.6);
+      box-shadow: 0 0 20px rgba(124,58,237,0.15);
+      background: rgba(124,58,237,0.05);
+    }
+    .form-input::placeholder { color: var(--color-muted); }
+
+    .form-error { display: none; color: #f87171; font-size: 0.8rem; margin-top: 4px; }
+    .form-error.show { display: block; }
+    .input-error { border-color: rgba(248,113,113,0.5) !important; }
+
+    /* ROCKET SVG ANIMATION */
+    @keyframes rocketFly {
+      0%,100% { transform: translateY(0) rotate(-45deg); }
+      50% { transform: translateY(-15px) rotate(-45deg); }
     }
 
-    /* Error styles */
-    .field-error {
-      border-color: #ef4444 !important;
+    .rocket-float {
+      animation: rocketFly 4s ease-in-out infinite;
     }
-    .error-msg {
-      color: #f87171;
-      font-size: 0.75rem;
-      margin-top: 0.25rem;
-      display: none;
+
+    /* SCROLL BAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--color-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 3px; }
+
+    /* GRID TEXTURE */
+    .grid-texture {
+      background-image:
+        linear-gradient(rgba(124,58,237,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,58,237,0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
     }
-    .error-msg.show {
-      display: block;
+
+    @keyframes orbitSpin {
+      0% { transform: translate(-50%,-50%) rotateX(75deg) rotate(0deg); }
+      100% { transform: translate(-50%,-50%) rotateX(75deg) rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .planet { width: 220px; height: 220px; }
+      .planet-ring { width: 320px; height: 320px; }
+      .planet-ring-2 { width: 380px; height: 380px; }
     }
   </style>
 </head>
-<body class="bg-space-900 text-white font-sans antialiased overflow-x-hidden">
+<body>
 
-  <!-- ===================== NAVBAR ===================== -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 px-6 py-4">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <!-- Logo -->
-      <a href="#hero" class="flex items-center gap-3 group">
-        <div class="relative w-10 h-10">
-          <!-- Rocket SVG -->
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
-            <path d="M20 4C20 4 12 12 12 22H28C28 12 20 4 20 4Z" fill="#f97316"/>
-            <rect x="16" y="22" width="8" height="10" fill="#ea580c"/>
-            <path d="M12 26L8 32H16V22C14 22 12 24 12 26Z" fill="#f97316"/>
-            <path d="M28 26L32 32H24V22C26 22 28 24 28 26Z" fill="#f97316"/>
-            <circle cx="20" cy="16" r="3" fill="#38bdf8"/>
-          </svg>
-        </div>
-        <span class="text-xl font-bold tracking-tight">
-          <span class="text-white">Rocket</span><span class="text-rocket-400">Drive</span>
-          <span class="text-gray-400 text-sm font-normal ml-1">GmbH</span>
-        </span>
+<!-- ═══════════════════════════════════════════════════ NAVBAR ═══ -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style="background: transparent;">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#hero" class="flex items-center gap-2 group">
+      <div class="w-9 h-9 rounded-lg btn-glow flex items-center justify-center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L8 8H4L2 12L6 14L8 20L12 18L16 20L18 14L22 12L20 8H16L12 2Z" fill="white"/>
+          <circle cx="12" cy="12" r="3" fill="rgba(255,255,255,0.3)"/>
+        </svg>
+      </div>
+      <span class="text-lg font-bold tracking-tight">
+        Space<span class="gradient-text-aurora">Venture</span>
+      </span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
+      <li><a href="#companies" class="text-slate-400 hover:text-white transition-colors duration-200">Unternehmen</a></li>
+      <li><a href="#goals" class="text-slate-400 hover:text-white transition-colors duration-200">Ziele</a></li>
+      <li><a href="#financials" class="text-slate-400 hover:text-white transition-colors duration-200">Finanzen</a></li>
+      <li><a href="#timeline" class="text-slate-400 hover:text-white transition-colors duration-200">Zeitplan</a></li>
+      <li><a href="#contact" class="text-slate-400 hover:text-white transition-colors duration-200">Kontakt</a></li>
+    </ul>
+
+    <!-- CTA + Hamburger -->
+    <div class="flex items-center gap-4">
+      <a href="#companies" class="hidden md:flex btn-glow rounded-full px-5 py-2.5 text-sm font-semibold text-white">
+        <span>Erkunden</span>
       </a>
-
-      <!-- Desktop Nav -->
-      <ul class="hidden md:flex items-center gap-8">
-        <li><a href="#about" class="text-gray-300 hover:text-rocket-400 transition-colors duration-200 text-sm font-medium">Über Uns</a></li>
-        <li><a href="#products" class="text-gray-300 hover:text-rocket-400 transition-colors duration-200 text-sm font-medium">Produkte</a></li>
-        <li><a href="#stats" class="text-gray-300 hover:text-rocket-400 transition-colors duration-200 text-sm font-medium">Zahlen</a></li>
-        <li><a href="#timeline" class="text-gray-300 hover:text-rocket-400 transition-colors duration-200 text-sm font-medium">Geschichte</a></li>
-        <li><a href="#team" class="text-gray-300 hover:text-rocket-400 transition-colors duration-200 text-sm font-medium">Team</a></li>
-        <li><a href="#contact" class="bg-rocket-500 hover:bg-rocket-400 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:shadow-lg hover:shadow-rocket-500/30">Kontakt</a></li>
-      </ul>
-
-      <!-- Hamburger -->
-      <button id="hamburger-btn" class="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 rounded-lg hover:bg-white/10 transition-colors duration-200" aria-label="Menü öffnen" aria-expanded="false">
+      <button id="hamburger" class="hamburger md:hidden flex flex-col gap-1.5 p-1">
         <span class="hamburger-bar bar1"></span>
         <span class="hamburger-bar bar2"></span>
         <span class="hamburger-bar bar3"></span>
       </button>
     </div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="md:hidden">
-      <ul class="flex flex-col gap-1 pt-4 pb-2 px-2">
-        <li><a href="#about" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium">Über Uns</a></li>
-        <li><a href="#products" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium">Produkte</a></li>
-        <li><a href="#stats" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium">Zahlen & Fakten</a></li>
-        <li><a href="#timeline" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium">Geschichte</a></li>
-        <li><a href="#team" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium">Team</a></li>
-        <li><a href="#contact" class="mobile-nav-link block px-4 py-3 rounded-lg text-center bg-rocket-500 hover:bg-rocket-400 text-white font-semibold transition-all duration-200 mt-2">Kontakt aufnehmen</a></li>
-      </ul>
-    </div>
   </nav>
 
-  <!-- ===================== HERO ===================== -->
-  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden stars-bg" style="background-color: #020817;">
-    <!-- Gradient overlays -->
-    <div class="absolute inset-0 bg-gradient-to-b from-space-900 via-space-800 to-space-900"></div>
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-rocket-500/10 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-500/10 rounded-full blur-3xl"></div>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu md:hidden glass border-b border-purple-900/20">
+    <ul class="flex flex-col px-6 py-4 gap-4 text-sm font-medium">
+      <li><a href="#companies" class="mobile-link block text-slate-300 hover:text-white py-2 border-b border-purple-900/20">Unternehmen</a></li>
+      <li><a href="#goals" class="mobile-link block text-slate-300 hover:text-white py-2 border-b border-purple-900/20">Ziele</a></li>
+      <li><a href="#financials" class="mobile-link block text-slate-300 hover:text-white py-2 border-b border-purple-900/20">Finanzen</a></li>
+      <li><a href="#timeline" class="mobile-link block text-slate-300 hover:text-white py-2 border-b border-purple-900/20">Zeitplan</a></li>
+      <li><a href="#contact" class="mobile-link block text-slate-300 hover:text-white py-2">Kontakt</a></li>
+    </ul>
+  </div>
+</header>
 
-    <!-- Orbital rings (decorative) -->
-    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-      <div class="orbit-ring w-[600px] h-[600px] rounded-full border border-white/5 absolute"></div>
-      <div class="orbit-ring-reverse w-[800px] h-[800px] rounded-full border border-white/5 absolute"></div>
-      <!-- Orbiting dot -->
-      <div class="orbit-ring w-[600px] h-[600px] rounded-full absolute flex items-start justify-center">
-        <div class="w-2 h-2 bg-rocket-400 rounded-full mt-0 shadow-lg shadow-rocket-400/50 -mt-1"></div>
-      </div>
-    </div>
 
-    <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+<!-- ═══════════════════════════════════════════════════ HERO ═══ -->
+<main>
+<section id="hero" class="hero-bg relative min-h-screen flex items-center overflow-hidden pt-20">
+  <!-- Grid texture -->
+  <div class="absolute inset-0 grid-texture opacity-30"></div>
+
+  <!-- Decorative circles -->
+  <div class="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-purple-600/5 blur-3xl"></div>
+  <div class="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full bg-cyan-500/5 blur-3xl"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-16 items-center">
+    <!-- Left Content -->
+    <div>
       <!-- Badge -->
-      <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8 text-sm text-gray-300">
-        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse-slow"></span>
-        Gegründet 2008 · Made in Germany
+      <div class="inline-flex items-center gap-2 glass-strong rounded-full px-4 py-2 text-xs font-semibold mb-6 text-cyan-400">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+        Das Raumfahrtzeitalter hat begonnen
       </div>
 
-      <!-- Rocket SVG Hero -->
-      <div class="flex justify-center mb-10" style="animation: float 6s ease-in-out infinite;">
-        <div class="relative">
-          <svg viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-28 h-40 drop-shadow-2xl">
-            <!-- Body -->
-            <path d="M60 10C60 10 35 45 35 95H85C85 45 60 10 60 10Z" fill="url(#rocketGrad1)"/>
-            <!-- Nose cone -->
-            <path d="M60 10L45 50H75L60 10Z" fill="#38bdf8"/>
-            <!-- Window -->
-            <circle cx="60" cy="65" r="10" fill="#0ea5e9" stroke="#7dd3fc" stroke-width="2"/>
-            <circle cx="60" cy="65" r="6" fill="#e0f2fe"/>
-            <!-- Body lower -->
-            <rect x="35" y="95" width="50" height="55" rx="4" fill="url(#rocketGrad2)"/>
-            <!-- Fins left -->
-            <path d="M35 110L15 145H35V110Z" fill="#f97316"/>
-            <!-- Fins right -->
-            <path d="M85 110L105 145H85V110Z" fill="#f97316"/>
-            <!-- Exhaust -->
-            <rect x="48" y="150" width="24" height="15" rx="3" fill="#374151"/>
-            <!-- Flame -->
-            <ellipse cx="52" cy="175" rx="5" ry="12" fill="url(#flameGrad1)" class="flame"/>
-            <ellipse cx="60" cy="178" rx="7" ry="15" fill="url(#flameGrad2)" class="flame" style="animation-delay: 0.1s;"/>
-            <ellipse cx="68" cy="175" rx="5" ry="12" fill="url(#flameGrad1)" class="flame" style="animation-delay: 0.2s;"/>
-            <!-- Stripes -->
-            <rect x="35" y="105" width="50" height="5" fill="#dc2626" opacity="0.6"/>
-            <rect x="35" y="125" width="50" height="5" fill="#dc2626" opacity="0.4"/>
-            <defs>
-              <linearGradient id="rocketGrad1" x1="35" y1="10" x2="85" y2="95" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#e2e8f0"/>
-                <stop offset="100%" stop-color="#94a3b8"/>
-              </linearGradient>
-              <linearGradient id="rocketGrad2" x1="35" y1="95" x2="85" y2="150" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#94a3b8"/>
-                <stop offset="100%" stop-color="#64748b"/>
-              </linearGradient>
-              <linearGradient id="flameGrad1" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-                <stop offset="0%" stop-color="#fbbf24"/>
-                <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
-              </linearGradient>
-              <linearGradient id="flameGrad2" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-                <stop offset="0%" stop-color="#fb923c"/>
-                <stop offset="50%" stop-color="#fbbf24"/>
-                <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-      </div>
-
-      <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
-        <span class="block text-white">Die Zukunft</span>
-        <span class="block gradient-text">der Raumfahrt</span>
-        <span class="block text-white">beginnt hier.</span>
+      <!-- Headline -->
+      <h1 class="text-5xl lg:text-7xl font-black leading-none tracking-tight mb-6">
+        Die private<br/>
+        <span class="gradient-text">Raumfahrt</span><br/>
+        Revolution
       </h1>
 
-      <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-        RocketDrive GmbH entwickelt und produziert hochmoderne Raketentriebwerke und Antriebssysteme für kommerzielle Satellitenmissionen, wissenschaftliche Forschung und bemannte Raumfahrt.
+      <p class="text-lg text-slate-400 leading-relaxed mb-8 max-w-lg">
+        Entdecke die führenden privaten Raumfahrtunternehmen — ihre ambitionierten Ziele, bahnbrechende Technologien und wirtschaftliche Entwicklungen, die die Menschheit zu den Sternen bringen.
       </p>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#products" class="group inline-flex items-center gap-2 bg-rocket-500 hover:bg-rocket-400 text-white font-bold px-8 py-4 rounded-full text-lg transition-all duration-300 hover:shadow-xl hover:shadow-rocket-500/40 glow-orange">
-          Unsere Produkte
-          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-          </svg>
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-4">
+        <a href="#companies" class="btn-glow rounded-full px-8 py-4 text-base font-bold text-white">
+          <span>Unternehmen erkunden</span>
         </a>
-        <a href="#contact" class="inline-flex items-center gap-2 border border-white/20 hover:border-accent-400 text-white hover:text-accent-400 font-bold px-8 py-4 rounded-full text-lg transition-all duration-300 hover:bg-accent-400/10">
-          Kontakt aufnehmen
+        <a href="#financials" class="btn-outline rounded-full px-8 py-4 text-base font-semibold text-slate-300">
+          Finanzdaten ansehen
         </a>
+      </div>
+
+      <!-- Mini stats -->
+      <div class="flex gap-8 mt-12">
+        <div>
+          <div class="text-2xl font-black gradient-text-aurora">6+</div>
+          <div class="text-xs text-slate-500 mt-1">Unternehmen</div>
+        </div>
+        <div class="w-px bg-purple-900"></div>
+        <div>
+          <div class="text-2xl font-black gradient-text-aurora">$180Mrd</div>
+          <div class="text-xs text-slate-500 mt-1">Gesamtbewertung</div>
+        </div>
+        <div class="w-px bg-purple-900"></div>
+        <div>
+          <div class="text-2xl font-black gradient-text-aurora">2050</div>
+          <div class="text-xs text-slate-500 mt-1">Mars-Ziel</div>
+        </div>
       </div>
     </div>
 
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-10 left-1/2 bounce-arrow">
-      <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-      </svg>
+    <!-- Right Visual -->
+    <div class="relative flex items-center justify-center h-[500px]">
+      <!-- Planet -->
+      <div class="planet">
+        <!-- Ring 1 -->
+        <div class="planet-ring"></div>
+        <!-- Ring 2 -->
+        <div class="planet-ring planet-ring-2"></div>
+        <!-- Surface details -->
+        <div class="absolute top-1/4 left-1/4 w-16 h-8 rounded-full bg-cyan-500/20 blur-md"></div>
+        <div class="absolute bottom-1/3 right-1/4 w-12 h-6 rounded-full bg-purple-400/20 blur-md"></div>
+      </div>
+
+      <!-- Floating Rocket -->
+      <div class="absolute top-8 right-8 rocket-float">
+        <svg width="60" height="100" viewBox="0 0 60 100" fill="none">
+          <path d="M30 5 C20 20 15 40 15 55 L30 65 L45 55 C45 40 40 20 30 5Z" fill="url(#rocketGrad)"/>
+          <path d="M15 55 L5 75 L20 68Z" fill="#f59e0b"/>
+          <path d="M45 55 L55 75 L40 68Z" fill="#f59e0b"/>
+          <circle cx="30" cy="35" r="8" fill="rgba(6,182,212,0.6)" stroke="rgba(6,182,212,0.8)" stroke-width="1.5"/>
+          <path d="M22 75 L26 90 L30 88 L34 90 L38 75" fill="#f97316" opacity="0.7"/>
+          <path d="M25 80 L28 92 L30 90 L32 92 L35 80" fill="#fbbf24" opacity="0.5"/>
+          <defs>
+            <linearGradient id="rocketGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Floating satellite -->
+      <div class="absolute bottom-16 left-4 animate-float" style="animation-delay:-3s;">
+        <svg width="50" height="40" viewBox="0 0 50 40" fill="none">
+          <rect x="18" y="14" width="14" height="12" rx="2" fill="rgba(124,58,237,0.6)" stroke="rgba(124,58,237,0.8)" stroke-width="1"/>
+          <rect x="0" y="17" width="14" height="6" rx="1" fill="rgba(6,182,212,0.5)"/>
+          <rect x="36" y="17" width="14" height="6" rx="1" fill="rgba(6,182,212,0.5)"/>
+          <circle cx="25" cy="20" r="3" fill="rgba(245,158,11,0.8)"/>
+        </svg>
+      </div>
+
+      <!-- Stars particles -->
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute w-1 h-1 rounded-full bg-white/60" style="top:15%;left:20%;"></div>
+        <div class="absolute w-1 h-1 rounded-full bg-cyan-400/60" style="top:60%;left:80%;"></div>
+        <div class="absolute w-1.5 h-1.5 rounded-full bg-purple-400/60" style="top:80%;left:30%;"></div>
+        <div class="absolute w-1 h-1 rounded-full bg-amber-400/60" style="top:30%;left:75%;"></div>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ===================== ABOUT ===================== -->
-  <section id="about" class="py-24 relative">
-    <div class="absolute inset-0 bg-gradient-to-b from-space-900 to-space-800"></div>
-    <div class="relative z-10 max-w-7xl mx-auto px-6">
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+    <span class="text-xs text-slate-600 tracking-widest uppercase">Scrollen</span>
+    <div class="w-px h-10 bg-gradient-to-b from-purple-500 to-transparent"></div>
+  </div>
+</section>
 
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-        <div class="reveal-left">
-          <span class="text-rocket-400 font-semibold text-sm uppercase tracking-widest mb-4 block">Über RocketDrive</span>
-          <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">
-            Präzision trifft<br/>
-            <span class="gradient-text">Leidenschaft</span>
-          </h2>
-          <p class="text-gray-400 text-lg leading-relaxed mb-6">
-            Seit 2008 entwickeln wir am Standort Bremen revolutionäre Antriebstechnologien, die Grenzen verschieben. Unsere Ingenieure kombinieren jahrzehntelanges Fachwissen mit modernsten Fertigungsverfahren.
-          </p>
-          <p class="text-gray-400 text-lg leading-relaxed mb-8">
-            Von der ersten Konzeptidee bis zum abgeschlossenen Zertifizierungsprozess begleiten wir unsere Kunden durch jede Phase der Entwicklung. Qualität, Zuverlässigkeit und Innovation sind keine Versprechen – sie sind unsere DNA.
-          </p>
-          <div class="grid grid-cols-2 gap-6">
-            <div class="bg-space-700/50 border border-white/10 rounded-2xl p-5">
-              <div class="text-rocket-400 text-3xl font-black mb-1">ISO</div>
-              <div class="text-gray-300 text-sm">9001:2015 zertifiziert</div>
-            </div>
-            <div class="bg-space-700/50 border border-white/10 rounded-2xl p-5">
-              <div class="text-accent-400 text-3xl font-black mb-1">ESA</div>
-              <div class="text-gray-300 text-sm">Qualifizierter Zulieferer</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="reveal-right">
-          <div class="relative">
-            <!-- Feature cards -->
-            <div class="grid grid-cols-1 gap-4">
-              <div class="bg-space-700/60 border border-white/10 rounded-2xl p-6 flex items-start gap-4 hover:border-rocket-400/40 transition-colors duration-300">
-                <div class="w-12 h-12 bg-rocket-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <svg class="w-6 h-6 text-rocket-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-bold text
+<!-- ═══════════════════════════════════════════════════ STATS ═══ -->
+<section class="py-20 section-bg-1 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="reveal glass-strong rounded-2xl p-6 text-center card-hover">
+        <div class="stat-number gradient-text mb-2" data-target="350">0</div>
+        <div class="text-xs text-slate-500 uppercase tracking-widest">Raketenstarts 2023</div>
+        <div class="progress-bar mt-3">
+          <div

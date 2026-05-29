@@ -37,29 +37,33 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 512,
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1024,
         stream: false,
-        system: `You are a brutally honest ${reviewer} expert reviewer for a professional web agency. Score 90+ only for genuinely exceptional work. Score below 70 freely when standards are not met. Output valid JSON only — no other text.`,
+        system: `You are a brutally honest ${reviewer} expert at a top-tier web agency. You give specific, code-level critique — never vague. Output valid JSON only — no other text.`,
         messages: [{
           role: 'user',
-          content: `Review this website code as a strict ${reviewer} expert.
+          content: `Review this website code as a ${reviewer} expert.
 
 SCORING GUIDE:
-- 90–100: Exceptional, agency-level quality, no meaningful issues
-- 75–89:  Good but has a few noticeable gaps
-- 60–74:  Mediocre — missing important elements or poor execution
-- below 60: Significant problems that hurt user experience or functionality
+- 90–100: Agency-level, no meaningful issues
+- 75–89:  Good but noticeable gaps
+- 60–74:  Mediocre, missing key elements
+- below 60: Real problems hurting UX or functionality
 
-Focus areas for ${reviewer}: ${focus}
+Focus for ${reviewer}: ${focus}
 
 Website goal: "${description}"
 
 ${codeBlock}
 
-List specific, actionable critical_issues (not vague — name the exact element, class, or section that needs fixing).
+IMPORTANT: critical_issues must be SPECIFIC and CODE-LEVEL.
+Bad example: "Add hover animations to cards"
+Good example: ".feature-card is missing transition: transform 0.3s ease and a :hover { transform: translateY(-8px) } rule"
+Bad example: "Improve the hero section"
+Good example: "Hero .hero-title has no gradient text — add background: linear-gradient(135deg, #f97316, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent"
 
-Return JSON only: {"score":<0-100>,"critical_issues":["specific issue 1","specific issue 2"],"suggestions":["suggestion 1"]}`,
+Return JSON only: {"score":<0-100>,"critical_issues":["specific code-level issue 1","specific code-level issue 2"],"suggestions":["suggestion"]}`,
         }],
       }),
     });
@@ -76,7 +80,7 @@ Return JSON only: {"score":<0-100>,"critical_issues":["specific issue 1","specif
       const parsed = JSON.parse(jm[0]);
       return res.json({
         score: Math.min(100, Math.max(0, Math.round(+parsed.score) || 72)),
-        critical_issues: Array.isArray(parsed.critical_issues) ? parsed.critical_issues.slice(0, 5) : [],
+        critical_issues: Array.isArray(parsed.critical_issues) ? parsed.critical_issues.slice(0, 7) : [],
         suggestions: Array.isArray(parsed.suggestions) ? parsed.suggestions.slice(0, 3) : [],
       });
     }
