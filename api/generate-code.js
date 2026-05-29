@@ -94,7 +94,8 @@ Build these sections (skip any that genuinely don't fit the topic):
 • No images — use inline SVG illustrations or CSS shapes
 • Real marketing copy — zero Lorem Ipsum
 • Form validation with error/success states
-• No code comments — clean, readable code only
+• No code comments, no empty lines between elements, no redundant CSS rules
+• Write compact but complete code — you have a strict token budget, so avoid verbosity
 
 Output ONLY file blocks — no explanations, no text outside blocks:
 ---FILE: filename.ext---
@@ -115,6 +116,11 @@ Design brief: Study the description carefully. Derive the brand colors, typograp
   }
 
   try {
+    // Send a tick immediately so the SSE connection is established in the browser
+    // before the (slow) Anthropic call. Without this, any error shows as "Netzwerkfehler"
+    // because no bytes have reached the client yet.
+    send({ type: 'tick' });
+
     const upstream = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -124,7 +130,7 @@ Design brief: Study the description carefully. Derive the brand colors, typograp
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 16000,
+        max_tokens: 8192,
         stream: true,
         system: SYSTEM,
         messages: [{ role: 'user', content: userPrompt }],
@@ -163,13 +169,16 @@ Design brief: Study the description carefully. Derive the brand colors, typograp
       }
     }
 
-    // Parse file blocks
+    // Parse file blocks — tolerant of truncated output (missing ---END FILE--- marker)
     const files = {};
-    const regex = /---FILE:\s*(.+?)---\n([\s\S]*?)---END FILE---/g;
-    let m;
-    while ((m = regex.exec(fullText)) !== null) {
-      const name = m[1].trim();
-      const content = m[2].trim();
+    const segments = fullText.split(/---FILE:\s*/);
+    for (const seg of segments.slice(1)) {
+      const headerEnd = seg.indexOf('---\n');
+      if (headerEnd === -1) continue;
+      const name    = seg.slice(0, headerEnd).trim();
+      const rest    = seg.slice(headerEnd + 4);
+      const bodyEnd = rest.indexOf('---END FILE---');
+      const content = (bodyEnd === -1 ? rest : rest.slice(0, bodyEnd)).trim();
       if (name && content) files[name] = content;
     }
     if (!Object.keys(files).length) {
