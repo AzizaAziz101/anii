@@ -3,571 +3,567 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SpaceVenture — Die Zukunft der privaten Raumfahrt</title>
+  <title>APEX LAUNCH — Führende Raketenproduzenten & Strategien</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            cosmos: '#04060f',
-            nebula: '#0a0e1a',
-            orbit: '#111827',
-            starlight: '#e8eaf6',
-            aurora: '#7c3aed',
-            plasma: '#06b6d4',
-            solar: '#f59e0b',
-            nova: '#f97316',
+            'space-black': '#020409',
+            'space-deep': '#060d1a',
+            'space-navy': '#0a1628',
+            'rocket-orange': '#ff6b35',
+            'rocket-amber': '#ffa500',
+            'plasma-blue': '#00d4ff',
+            'plasma-violet': '#7c3aed',
+            'star-white': '#e8f0ff',
           },
           fontFamily: {
-            sans: ['Sora', 'sans-serif'],
+            'space': ['Sora', 'sans-serif'],
           },
           animation: {
-            float: 'float 6s ease-in-out infinite',
-            pulse_glow: 'pulseGlow 3s ease-in-out infinite',
-            counter: 'countUp 2s ease-out forwards',
-            orbit_slow: 'orbitSpin 20s linear infinite',
-          },
-          keyframes: {
-            float: {
-              '0%,100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-24px)' },
-            },
-            pulseGlow: {
-              '0%,100%': { boxShadow: '0 0 20px rgba(124,58,237,0.4)' },
-              '50%': { boxShadow: '0 0 50px rgba(124,58,237,0.8), 0 0 80px rgba(6,182,212,0.3)' },
-            },
-            orbitSpin: {
-              '0%': { transform: 'rotate(0deg)' },
-              '100%': { transform: 'rotate(360deg)' },
-            },
-          },
-        },
-      },
-    };
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+            'counter': 'counterUp 2s ease-out forwards',
+            'twinkle': 'twinkle 3s ease-in-out infinite',
+            'orbit': 'orbit 20s linear infinite',
+          }
+        }
+      }
+    }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --color-bg: #04060f;
-      --color-surface: #0a0e1a;
-      --color-border: rgba(124,58,237,0.2);
-      --color-text: #e8eaf6;
-      --color-muted: #8892b0;
-      --color-accent: #7c3aed;
-      --color-accent-2: #06b6d4;
+      --color-bg: #020409;
+      --color-surface: #0a1628;
+      --color-border: rgba(0, 212, 255, 0.15);
+      --color-text: #e8f0ff;
+      --color-muted: #8899bb;
+      --color-accent: #00d4ff;
+      --color-accent-2: #ff6b35;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-family: 'Sora', sans-serif; background: var(--color-bg); color: var(--color-text); }
+
     body {
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      font-family: 'Sora', sans-serif;
+      background-color: #020409;
       overflow-x: hidden;
     }
 
-    /* STAR FIELD BACKGROUND */
-    body::before {
-      content: '';
+    /* Star field background */
+    .star-field {
       position: fixed;
-      inset: 0;
-      background-image:
-        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
-        radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
-        radial-gradient(1px 1px at 50% 40%, rgba(255,255,255,0.7) 0%, transparent 100%),
-        radial-gradient(1px 1px at 70% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
-        radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
-        radial-gradient(1px 1px at 20% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
-        radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
-        radial-gradient(1px 1px at 90% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
-        radial-gradient(1px 1px at 40% 55%, rgba(255,255,255,0.35) 0%, transparent 100%),
-        radial-gradient(1px 1px at 75% 85%, rgba(255,255,255,0.45) 0%, transparent 100%);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       pointer-events: none;
       z-index: 0;
+      overflow: hidden;
     }
 
-    /* GLASSMORPHISM */
+    .star {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration, 3s) ease-in-out infinite var(--delay, 0s);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-18px) rotate(1deg); }
+      66% { transform: translateY(-8px) rotate(-1deg); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(0,212,255,0.3), 0 0 60px rgba(0,212,255,0.1); }
+      50% { box-shadow: 0 0 40px rgba(0,212,255,0.6), 0 0 100px rgba(0,212,255,0.2); }
+    }
+
+    @keyframes orbit {
+      0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+      100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes exhaustFlame {
+      0%, 100% { transform: scaleY(1) scaleX(1); opacity: 0.9; }
+      50% { transform: scaleY(1.3) scaleX(0.85); opacity: 1; }
+    }
+
+    @keyframes rocketLaunch {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scanLine {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { border-color: rgba(0,212,255,0.2); }
+      50% { border-color: rgba(0,212,255,0.6); }
+    }
+
+    /* Glassmorphism */
     .glass {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(0, 212, 255, 0.15);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
 
-    .glass-strong {
-      background: rgba(124,58,237,0.07);
-      border: 1px solid rgba(124,58,237,0.2);
+    .glass-dark {
+      background: rgba(10, 22, 40, 0.7);
+      border: 1px solid rgba(0, 212, 255, 0.12);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
     }
 
-    /* GRADIENT TEXT */
-    .gradient-text {
-      background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #f59e0b 100%);
+    /* Gradient text */
+    .gradient-text-blue {
+      background: linear-gradient(135deg, #00d4ff, #7c3aed);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .gradient-text-aurora {
-      background: linear-gradient(135deg, #a78bfa 0%, #06b6d4 100%);
+    .gradient-text-fire {
+      background: linear-gradient(135deg, #ff6b35, #ffa500, #ffdd00);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    /* HERO BACKGROUND */
-    .hero-bg {
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,58,237,0.25) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 90% 50%, rgba(6,182,212,0.15) 0%, transparent 50%),
-        radial-gradient(ellipse 50% 50% at 10% 80%, rgba(245,158,11,0.08) 0%, transparent 50%),
-        #04060f;
+    .gradient-text-mixed {
+      background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 50%, #ff6b35 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* SECTION BACKGROUNDS */
-    .section-bg-1 {
-      background:
-        radial-gradient(ellipse 70% 50% at 20% 50%, rgba(124,58,237,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 80% 50%, rgba(6,182,212,0.06) 0%, transparent 50%),
-        #0a0e1a;
+    /* Navbar */
+    #navbar {
+      transition: all 0.4s ease;
     }
 
-    .section-bg-2 {
-      background:
-        radial-gradient(ellipse 60% 60% at 70% 30%, rgba(245,158,11,0.06) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 20% 70%, rgba(124,58,237,0.08) 0%, transparent 50%),
-        #04060f;
+    #navbar.scrolled {
+      background: rgba(2, 4, 9, 0.9) !important;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+      box-shadow: 0 4px 30px rgba(0, 212, 255, 0.05);
     }
 
-    /* GLOW BUTTON */
-    .btn-glow {
-      background: linear-gradient(135deg, #7c3aed, #06b6d4);
-      box-shadow: 0 0 20px rgba(124,58,237,0.4);
+    /* CTA Button */
+    .btn-primary {
+      background: linear-gradient(135deg, #00d4ff, #7c3aed);
+      background-size: 200% 200%;
+      animation: gradientShift 4s ease infinite;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
     }
-    .btn-glow::before {
+
+    .btn-primary::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #06b6d4, #7c3aed);
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-primary:hover::before { left: 100%; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.4); }
+
+    .btn-secondary {
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(0,212,255,0.8);
+      background: rgba(0, 212, 255, 0.1);
+      box-shadow: 0 0 25px rgba(0,212,255,0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Card hover */
+    .company-card {
+      transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .company-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--card-accent, #00d4ff), transparent);
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-    .btn-glow:hover::before { opacity: 1; }
-    .btn-glow:hover {
-      box-shadow: 0 0 40px rgba(124,58,237,0.7), 0 0 80px rgba(6,182,212,0.3);
-      transform: translateY(-2px);
-    }
-    .btn-glow span { position: relative; z-index: 1; }
 
-    .btn-outline {
-      border: 1px solid rgba(124,58,237,0.5);
-      transition: all 0.3s ease;
-    }
-    .btn-outline:hover {
-      border-color: rgba(124,58,237,1);
-      background: rgba(124,58,237,0.1);
-      box-shadow: 0 0 20px rgba(124,58,237,0.3);
+    .company-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--card-accent, rgba(0,212,255,0.4)) !important;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px var(--card-glow, rgba(0,212,255,0.15));
     }
 
-    /* CARD HOVER */
-    .card-hover {
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-    .card-hover:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(124,58,237,0.2), 0 8px 20px rgba(0,0,0,0.5);
-      border-color: rgba(124,58,237,0.4) !important;
-    }
+    .company-card:hover::before { opacity: 1; }
 
-    /* SCROLL REVEAL */
+    /* Scroll reveal */
     .reveal {
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
+
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
+
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
     .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
 
-    /* NAVBAR SCROLL */
-    .navbar-scrolled {
-      background: rgba(4,6,15,0.85) !important;
-      backdrop-filter: blur(20px) !important;
-      border-bottom: 1px solid rgba(124,58,237,0.2) !important;
+    /* Section divider */
+    .section-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, #00d4ff, #7c3aed);
+      border-radius: 2px;
+      margin: 0 auto 1.5rem;
     }
 
-    /* PLANET VISUAL */
-    .planet {
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%,
-        rgba(124,58,237,0.8) 0%,
-        rgba(6,182,212,0.4) 40%,
-        rgba(4,6,15,0.9) 100%);
-      box-shadow:
-        0 0 60px rgba(124,58,237,0.5),
-        0 0 120px rgba(124,58,237,0.2),
-        inset 0 0 60px rgba(0,0,0,0.5);
-      position: relative;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .planet-ring {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotateX(75deg);
-      width: 480px;
-      height: 480px;
-      border-radius: 50%;
-      border: 2px solid rgba(6,182,212,0.3);
-      box-shadow: 0 0 20px rgba(6,182,212,0.2);
-    }
-
-    .planet-ring-2 {
-      width: 560px;
-      height: 560px;
-      border-color: rgba(124,58,237,0.15);
-    }
-
-    /* ORBIT ANIMATION */
-    .orbit-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .orbit-path {
-      border-radius: 50%;
-      border: 1px dashed rgba(255,255,255,0.1);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotateX(75deg);
-      animation: orbitSpin 20s linear infinite;
-    }
-
-    .orbit-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #06b6d4;
-      box-shadow: 0 0 10px rgba(6,182,212,0.8);
-      position: absolute;
-      top: -6px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    /* STATS COUNTER */
-    .stat-number {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    /* SECTION LABEL */
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--color-accent-2);
-    }
-
-    /* TIMELINE */
-    .timeline-line {
-      width: 2px;
-      background: linear-gradient(180deg, #7c3aed 0%, #06b6d4 50%, transparent 100%);
-    }
-
-    /* HAMBURGER */
-    .hamburger-bar {
-      width: 24px;
-      height: 2px;
-      background: var(--color-text);
+    /* Hamburger */
+    .hamburger-line {
+      width: 24px; height: 2px;
+      background: #e8f0ff;
       transition: all 0.3s ease;
-      transform-origin: center;
+      display: block;
     }
 
-    .hamburger.open .bar1 { transform: translateY(8px) rotate(45deg); }
-    .hamburger.open .bar2 { opacity: 0; transform: scaleX(0); }
-    .hamburger.open .bar3 { transform: translateY(-8px) rotate(-45deg); }
+    #hamburger.open .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    #hamburger.open .hamburger-line:nth-child(2) { opacity: 0; }
+    #hamburger.open .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
 
-    /* MOBILE MENU */
-    .mobile-menu {
+    #mobile-menu {
+      transition: all 0.4s ease;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s ease;
     }
-    .mobile-menu.open { max-height: 500px; }
 
-    /* COMPANY COLOR BADGES */
-    .spacex-badge { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-    .blueorigin-badge { background: linear-gradient(135deg, #1e3a5f, #0284c7); }
-    .virgin-badge { background: linear-gradient(135deg, #dc2626, #f97316); }
-    .rocketlab-badge { background: linear-gradient(135deg, #0d9488, #06b6d4); }
-    .relativity-badge { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
-    .sierra-badge { background: linear-gradient(135deg, #065f46, #10b981); }
+    #mobile-menu.open { max-height: 500px; }
 
-    /* PROGRESS BAR */
+    /* Stats counter */
+    .stat-number {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    /* Progress bars */
     .progress-bar {
       height: 6px;
       border-radius: 3px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.08);
       overflow: hidden;
     }
+
     .progress-fill {
       height: 100%;
       border-radius: 3px;
-      transition: width 1.5s ease 0.5s;
+      width: 0%;
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* FORM STYLES */
-    .form-input {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(124,58,237,0.2);
-      color: var(--color-text);
-      transition: all 0.3s ease;
-      font-family: 'Sora', sans-serif;
+    /* Timeline */
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(180deg, #00d4ff, #7c3aed, #ff6b35);
     }
+
+    /* Form */
+    .form-input {
+      background: rgba(10, 22, 40, 0.8);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      color: #e8f0ff;
+      transition: all 0.3s ease;
+    }
+
     .form-input:focus {
       outline: none;
-      border-color: rgba(124,58,237,0.6);
-      box-shadow: 0 0 20px rgba(124,58,237,0.15);
-      background: rgba(124,58,237,0.05);
-    }
-    .form-input::placeholder { color: var(--color-muted); }
-
-    .form-error { display: none; color: #f87171; font-size: 0.8rem; margin-top: 4px; }
-    .form-error.show { display: block; }
-    .input-error { border-color: rgba(248,113,113,0.5) !important; }
-
-    /* ROCKET SVG ANIMATION */
-    @keyframes rocketFly {
-      0%,100% { transform: translateY(0) rotate(-45deg); }
-      50% { transform: translateY(-15px) rotate(-45deg); }
+      border-color: rgba(0, 212, 255, 0.6);
+      box-shadow: 0 0 20px rgba(0,212,255,0.15);
     }
 
-    .rocket-float {
-      animation: rocketFly 4s ease-in-out infinite;
-    }
+    .form-input.error { border-color: #ff6b35; box-shadow: 0 0 15px rgba(255,107,53,0.2); }
+    .form-input.success { border-color: #00ff88; box-shadow: 0 0 15px rgba(0,255,136,0.2); }
 
-    /* SCROLL BAR */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--color-bg); }
-    ::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 3px; }
+    /* Rocket SVG animation */
+    .rocket-exhaust { animation: exhaustFlame 0.8s ease-in-out infinite; transform-origin: top center; }
+    .rocket-body { animation: float 6s ease-in-out infinite; }
 
-    /* GRID TEXTURE */
-    .grid-texture {
-      background-image:
-        linear-gradient(rgba(124,58,237,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124,58,237,0.05) 1px, transparent 1px);
+    /* Section bg patterns */
+    .bg-grid {
+      background-image: 
+        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
       background-size: 50px 50px;
     }
 
-    @keyframes orbitSpin {
-      0% { transform: translate(-50%,-50%) rotateX(75deg) rotate(0deg); }
-      100% { transform: translate(-50%,-50%) rotateX(75deg) rotate(360deg); }
+    .bg-dots {
+      background-image: radial-gradient(rgba(0,212,255,0.15) 1px, transparent 1px);
+      background-size: 30px 30px;
     }
 
-    @media (max-width: 768px) {
-      .planet { width: 220px; height: 220px; }
-      .planet-ring { width: 320px; height: 320px; }
-      .planet-ring-2 { width: 380px; height: 380px; }
+    /* Orbital ring */
+    .orbital-ring {
+      position: absolute;
+      border: 1px solid rgba(0,212,255,0.12);
+      border-radius: 50%;
+      animation: spin linear infinite;
     }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Tooltip badge */
+    .strategy-badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+
+    /* Scroll indicator */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    .scroll-indicator { animation: bounce 2s ease-in-out infinite; }
+
+    /* Horizontal scroll for mobile cards */
+    @media (max-width: 640px) {
+      .mobile-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    }
+
+    /* Glitch effect for hero */
+    @keyframes glitch {
+      0%, 90%, 100% { clip-path: none; transform: none; }
+      91% { clip-path: rect(20px, 9999px, 40px, 0); transform: skewX(-2deg); }
+      93% { clip-path: rect(60px, 9999px, 80px, 0); transform: skewX(2deg); }
+      95% { clip-path: rect(10px, 9999px, 30px, 0); transform: skewX(-1deg); }
+    }
+
+    .hero-badge {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    /* Comparison chart */
+    .radar-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
   </style>
 </head>
-<body>
+<body class="relative">
 
-<!-- ═══════════════════════════════════════════════════ NAVBAR ═══ -->
-<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style="background: transparent;">
-  <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-    <!-- Logo -->
-    <a href="#hero" class="flex items-center gap-2 group">
-      <div class="w-9 h-9 rounded-lg btn-glow flex items-center justify-center">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2L8 8H4L2 12L6 14L8 20L12 18L16 20L18 14L22 12L20 8H16L12 2Z" fill="white"/>
-          <circle cx="12" cy="12" r="3" fill="rgba(255,255,255,0.3)"/>
-        </svg>
-      </div>
-      <span class="text-lg font-bold tracking-tight">
-        Space<span class="gradient-text-aurora">Venture</span>
-      </span>
-    </a>
+  <!-- Star Field -->
+  <div class="star-field" id="starField"></div>
 
-    <!-- Desktop Nav -->
-    <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
-      <li><a href="#companies" class="text-slate-400 hover:text-white transition-colors duration-200">Unternehmen</a></li>
-      <li><a href="#goals" class="text-slate-400 hover:text-white transition-colors duration-200">Ziele</a></li>
-      <li><a href="#financials" class="text-slate-400 hover:text-white transition-colors duration-200">Finanzen</a></li>
-      <li><a href="#timeline" class="text-slate-400 hover:text-white transition-colors duration-200">Zeitplan</a></li>
-      <li><a href="#contact" class="text-slate-400 hover:text-white transition-colors duration-200">Kontakt</a></li>
-    </ul>
+  <!-- Gradient Orbs (fixed) -->
+  <div style="position:fixed;top:-20%;left:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(124,58,237,0.12) 0%,transparent 70%);pointer-events:none;z-index:0;"></div>
+  <div style="position:fixed;top:30%;right:-15%;width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,255,0.1) 0%,transparent 70%);pointer-events:none;z-index:0;"></div>
+  <div style="position:fixed;bottom:-10%;left:20%;width:700px;height:400px;background:radial-gradient(circle,rgba(255,107,53,0.07) 0%,transparent 70%);pointer-events:none;z-index:0;"></div>
 
-    <!-- CTA + Hamburger -->
-    <div class="flex items-center gap-4">
-      <a href="#companies" class="hidden md:flex btn-glow rounded-full px-5 py-2.5 text-sm font-semibold text-white">
-        <span>Erkunden</span>
-      </a>
-      <button id="hamburger" class="hamburger md:hidden flex flex-col gap-1.5 p-1">
-        <span class="hamburger-bar bar1"></span>
-        <span class="hamburger-bar bar2"></span>
-        <span class="hamburger-bar bar3"></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Mobile Menu -->
-  <div id="mobileMenu" class="mobile-menu md:hidden glass border-b border-purple-900/20">
-    <ul class="flex flex-col px-6 py-4 gap-4 text-sm font-medium">
-      <li><a href="#companies" class="mobile-link block text-slate-300 hover:text-white py-2 border-b border-purple-900/20">Unternehmen</a></li>
-      <li><a href="#goals" class="mobile-link block text-slate-300 hover:text-white py-2 border-b border-purple-900/20">Ziele</a></li>
-      <li><a href="#financials" class="mobile-link block text-slate-300 hover:text-white py-2 border-b border-purple-900/20">Finanzen</a></li>
-      <li><a href="#timeline" class="mobile-link block text-slate-300 hover:text-white py-2 border-b border-purple-900/20">Zeitplan</a></li>
-      <li><a href="#contact" class="mobile-link block text-slate-300 hover:text-white py-2">Kontakt</a></li>
-    </ul>
-  </div>
-</header>
-
-
-<!-- ═══════════════════════════════════════════════════ HERO ═══ -->
-<main>
-<section id="hero" class="hero-bg relative min-h-screen flex items-center overflow-hidden pt-20">
-  <!-- Grid texture -->
-  <div class="absolute inset-0 grid-texture opacity-30"></div>
-
-  <!-- Decorative circles -->
-  <div class="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-purple-600/5 blur-3xl"></div>
-  <div class="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full bg-cyan-500/5 blur-3xl"></div>
-
-  <div class="relative z-10 max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-16 items-center">
-    <!-- Left Content -->
-    <div>
-      <!-- Badge -->
-      <div class="inline-flex items-center gap-2 glass-strong rounded-full px-4 py-2 text-xs font-semibold mb-6 text-cyan-400">
-        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-        Das Raumfahrtzeitalter hat begonnen
-      </div>
-
-      <!-- Headline -->
-      <h1 class="text-5xl lg:text-7xl font-black leading-none tracking-tight mb-6">
-        Die private<br/>
-        <span class="gradient-text">Raumfahrt</span><br/>
-        Revolution
-      </h1>
-
-      <p class="text-lg text-slate-400 leading-relaxed mb-8 max-w-lg">
-        Entdecke die führenden privaten Raumfahrtunternehmen — ihre ambitionierten Ziele, bahnbrechende Technologien und wirtschaftliche Entwicklungen, die die Menschheit zu den Sternen bringen.
-      </p>
-
-      <!-- CTAs -->
-      <div class="flex flex-wrap gap-4">
-        <a href="#companies" class="btn-glow rounded-full px-8 py-4 text-base font-bold text-white">
-          <span>Unternehmen erkunden</span>
+  <!-- ═══════════════════════════════════════════ NAVBAR ═══ -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-400">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18 py-4">
+        <!-- Logo -->
+        <a href="#hero" class="flex items-center gap-3 group">
+          <div class="relative">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <circle cx="18" cy="18" r="17" stroke="url(#logoGrad)" stroke-width="1.5" fill="rgba(0,212,255,0.08)"/>
+              <path d="M18 6 L14 22 L18 20 L22 22 Z" fill="url(#rocketGrad)"/>
+              <path d="M14 22 L12 26 L18 24 L24 26 L22 22" fill="url(#exhaustGrad)" opacity="0.7"/>
+              <circle cx="18" cy="15" r="2" fill="#00d4ff" opacity="0.9"/>
+              <defs>
+                <linearGradient id="logoGrad" x1="0" y1="0" x2="36" y2="36">
+                  <stop offset="0%" stop-color="#00d4ff"/>
+                  <stop offset="100%" stop-color="#7c3aed"/>
+                </linearGradient>
+                <linearGradient id="rocketGrad" x1="14" y1="6" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#e8f0ff"/>
+                  <stop offset="100%" stop-color="#00d4ff"/>
+                </linearGradient>
+                <linearGradient id="exhaustGrad" x1="12" y1="22" x2="24" y2="26" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#ff6b35"/>
+                  <stop offset="100%" stop-color="#ffa500"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div>
+            <span class="text-lg font-black tracking-tight gradient-text-blue">APEX</span>
+            <span class="text-lg font-black tracking-tight text-star-white ml-1">LAUNCH</span>
+          </div>
         </a>
-        <a href="#financials" class="btn-outline rounded-full px-8 py-4 text-base font-semibold text-slate-300">
-          Finanzdaten ansehen
-        </a>
-      </div>
 
-      <!-- Mini stats -->
-      <div class="flex gap-8 mt-12">
-        <div>
-          <div class="text-2xl font-black gradient-text-aurora">6+</div>
-          <div class="text-xs text-slate-500 mt-1">Unternehmen</div>
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#stats" class="text-sm text-gray-400 hover:text-plasma-blue transition-colors duration-200 font-medium tracking-wide">Überblick</a>
+          <a href="#companies" class="text-sm text-gray-400 hover:text-plasma-blue transition-colors duration-200 font-medium tracking-wide">Unternehmen</a>
+          <a href="#strategies" class="text-sm text-gray-400 hover:text-plasma-blue transition-colors duration-200 font-medium tracking-wide">Strategien</a>
+          <a href="#comparison" class="text-sm text-gray-400 hover:text-plasma-blue transition-colors duration-200 font-medium tracking-wide">Vergleich</a>
+          <a href="#timeline" class="text-sm text-gray-400 hover:text-plasma-blue transition-colors duration-200 font-medium tracking-wide">Meilensteine</a>
+          <a href="#contact" class="text-sm text-gray-400 hover:text-plasma-blue transition-colors duration-200 font-medium tracking-wide">Kontakt</a>
+          <a href="#contact" class="btn-primary text-white text-sm font-bold px-5 py-2.5 rounded-full">Mission starten →</a>
         </div>
-        <div class="w-px bg-purple-900"></div>
-        <div>
-          <div class="text-2xl font-black gradient-text-aurora">$180Mrd</div>
-          <div class="text-xs text-slate-500 mt-1">Gesamtbewertung</div>
+
+        <!-- Hamburger -->
+        <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-2 z-50">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="md:hidden">
+        <div class="glass-dark rounded-2xl mx-2 mb-4 p-6 flex flex-col gap-4">
+          <a href="#stats" class="text-gray-300 hover:text-plasma-blue transition-colors font-medium mobile-link">Überblick</a>
+          <a href="#companies" class="text-gray-300 hover:text-plasma-blue transition-colors font-medium mobile-link">Unternehmen</a>
+          <a href="#strategies" class="text-gray-300 hover:text-plasma-blue transition-colors font-medium mobile-link">Strategien</a>
+          <a href="#comparison" class="text-gray-300 hover:text-plasma-blue transition-colors font-medium mobile-link">Vergleich</a>
+          <a href="#timeline" class="text-gray-300 hover:text-plasma-blue transition-colors font-medium mobile-link">Meilensteine</a>
+          <a href="#contact" class="text-gray-300 hover:text-plasma-blue transition-colors font-medium mobile-link">Kontakt</a>
+          <a href="#contact" class="btn-primary text-center text-white font-bold px-5 py-3 rounded-full mt-2">Mission starten →</a>
         </div>
-        <div class="w-px bg-purple-900"></div>
-        <div>
-          <div class="text-2xl font-black gradient-text-aurora">2050</div>
-          <div class="text-xs text-slate-500 mt-1">Mars-Ziel</div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="relative z-10">
+
+    <!-- ═══════════════════════════════════════════ HERO ═══ -->
+    <section id="hero" class="relative min-h-screen flex items-center bg-grid overflow-hidden">
+      
+      <!-- Background radial gradients -->
+      <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(124,58,237,0.15) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 80% 30%, rgba(0,212,255,0.1) 0%, transparent 60%); pointer-events:none;"></div>
+
+      <!-- Orbital rings decoration -->
+      <div style="position:absolute;top:50%;left:60%;transform:translate(-50%,-50%);pointer-events:none;" class="hidden lg:block">
+        <div style="width:500px;height:500px;border:1px solid rgba(0,212,255,0.08);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 30s linear infinite;"></div>
+        <div style="width:700px;height:700px;border:1px solid rgba(124,58,237,0.06);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 50s linear infinite reverse;"></div>
+        <div style="width:350px;height:350px;border:1px dashed rgba(0,212,255,0.06);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 20s linear infinite;"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-0 grid lg:grid-cols-2 gap-12 items-center w-full">
+        
+        <!-- Hero Text -->
+        <div class="space-y-8">
+          <!-- Badge -->
+          <div class="hero-badge inline-flex items-center gap-2 glass border border-plasma-blue/30 text-plasma-blue text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full">
+            <span class="w-2 h-2 bg-plasma-blue rounded-full animate-pulse"></span>
+            RAUMFAHRT INTELLIGENCE PLATTFORM
+          </div>
+
+          <!-- Headline -->
+          <h1 style="font-size:clamp(2.8rem,6vw,5.5rem);font-weight:900;letter-spacing:-0.03em;line-height:1.05;">
+            Die <span class="gradient-text-blue">Raketen&shy;industrie</span><br/>
+            der <span class="gradient-text-fire">Zukunft</span>
+          </h1>
+
+          <p class="text-gray-400 text-lg leading-relaxed max-w-lg">
+            Umfassende Analyse der führenden Raketenproduzenten weltweit — ihre Technologien, Marktstrategien und Visionen für das Zeitalter der kommerziellen Raumfahrt.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap gap-4">
+            <a href="#companies" class="btn-primary text-white font-bold px-8 py-4 rounded-full flex items-center gap-2 text-base">
+              Unternehmen erkunden
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#strategies" class="btn-secondary text-star-white font-bold px-8 py-4 rounded-full text-base">
+              Strategien ansehen
+            </a>
+          </div>
+
+          <!-- Trust signals -->
+          <div class="flex flex-wrap gap-6 pt-4">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-plasma-blue/20 flex items-center justify-center">
+                <svg width="14" height="14" fill="#00d4ff" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <span class="text-gray-400 text-sm">12 Unternehmen</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-rocket-orange/20 flex items-center justify-center">
+                <svg width="14" height="14" fill="#ff6b35" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <span class="text-gray-400 text-sm">Echtzeit-Daten</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-plasma-violet/20 flex items-center justify-center">
+                <svg width="14" height="14" fill="#7c3aed" viewBox="0 0 24 24"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
+              </div>
+              <span class="text-gray-400 text-sm">Global Coverage</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Right Visual -->
-    <div class="relative flex items-center justify-center h-[500px]">
-      <!-- Planet -->
-      <div class="planet">
-        <!-- Ring 1 -->
-        <div class="planet-ring"></div>
-        <!-- Ring 2 -->
-        <div class="planet-ring planet-ring-2"></div>
-        <!-- Surface details -->
-        <div class="absolute top-1/4 left-1/4 w-16 h-8 rounded-full bg-cyan-500/20 blur-md"></div>
-        <div class="absolute bottom-1/3 right-1/4 w-12 h-6 rounded-full bg-purple-400/20 blur-md"></div>
-      </div>
-
-      <!-- Floating Rocket -->
-      <div class="absolute top-8 right-8 rocket-float">
-        <svg width="60" height="100" viewBox="0 0 60 100" fill="none">
-          <path d="M30 5 C20 20 15 40 15 55 L30 65 L45 55 C45 40 40 20 30 5Z" fill="url(#rocketGrad)"/>
-          <path d="M15 55 L5 75 L20 68Z" fill="#f59e0b"/>
-          <path d="M45 55 L55 75 L40 68Z" fill="#f59e0b"/>
-          <circle cx="30" cy="35" r="8" fill="rgba(6,182,212,0.6)" stroke="rgba(6,182,212,0.8)" stroke-width="1.5"/>
-          <path d="M22 75 L26 90 L30 88 L34 90 L38 75" fill="#f97316" opacity="0.7"/>
-          <path d="M25 80 L28 92 L30 90 L32 92 L35 80" fill="#fbbf24" opacity="0.5"/>
-          <defs>
-            <linearGradient id="rocketGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#a78bfa"/>
-              <stop offset="100%" stop-color="#06b6d4"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-
-      <!-- Floating satellite -->
-      <div class="absolute bottom-16 left-4 animate-float" style="animation-delay:-3s;">
-        <svg width="50" height="40" viewBox="0 0 50 40" fill="none">
-          <rect x="18" y="14" width="14" height="12" rx="2" fill="rgba(124,58,237,0.6)" stroke="rgba(124,58,237,0.8)" stroke-width="1"/>
-          <rect x="0" y="17" width="14" height="6" rx="1" fill="rgba(6,182,212,0.5)"/>
-          <rect x="36" y="17" width="14" height="6" rx="1" fill="rgba(6,182,212,0.5)"/>
-          <circle cx="25" cy="20" r="3" fill="rgba(245,158,11,0.8)"/>
-        </svg>
-      </div>
-
-      <!-- Stars particles -->
-      <div class="absolute inset-0 pointer-events-none">
-        <div class="absolute w-1 h-1 rounded-full bg-white/60" style="top:15%;left:20%;"></div>
-        <div class="absolute w-1 h-1 rounded-full bg-cyan-400/60" style="top:60%;left:80%;"></div>
-        <div class="absolute w-1.5 h-1.5 rounded-full bg-purple-400/60" style="top:80%;left:30%;"></div>
-        <div class="absolute w-1 h-1 rounded-full bg-amber-400/60" style="top:30%;left:75%;"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scroll indicator -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-    <span class="text-xs text-slate-600 tracking-widest uppercase">Scrollen</span>
-    <div class="w-px h-10 bg-gradient-to-b from-purple-500 to-transparent"></div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════ STATS ═══ -->
-<section class="py-20 section-bg-1 relative">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-      <div class="reveal glass-strong rounded-2xl p-6 text-center card-hover">
-        <div class="stat-number gradient-text mb-2" data-target="350">0</div>
-        <div class="text-xs text-slate-500 uppercase tracking-widest">Raketenstarts 2023</div>
-        <div class="progress-bar mt-3">
-          <div
+        <!-- Hero Visual — Rocket Illustration -->
+        <div class="flex justify-center items-center relative">
+          <div class="rocket-body relative" style="width:300px;height:420px;">
+            <svg viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg" width="300" height="420">
+              <defs>
+                <linearGradient id="bodyGrad" x1="80" y1="0" x2="220" y2="420" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#c8d8f0"/>
+                  <stop offset="50%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#8899bb"/>
+                </linearGradient>
+                <linearGradient id="noseGrad" x1="100" y1="0" x2="200" y2="100" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#00d4ff"/>
+                  <stop offset="100%" stop-color="#7c3aed"/>
+                </linearGradient>
+                <linearGradient
