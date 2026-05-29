@@ -1,11 +1,11 @@
 export const maxDuration = 30;
 
 const FOCUS = {
-  'UX/UI':        'visual hierarchy, typography, color contrast, spacing, layout, mobile responsiveness, accessibility (ARIA, focus states)',
-  'Security':     'XSS prevention, no innerHTML with untrusted data, input validation, CSP readiness, no exposed credentials',
-  'Code Quality': 'semantic HTML5, clean DRY CSS, organized vanilla JS, no console.log, proper error handling, logical structure',
-  'SEO':          'title tag, meta description, single H1, alt texts, semantic landmarks, Open Graph tags, page-speed hints',
-  'Excellence':   'creativity, wow factor, micro-interactions, animations, professional polish, unique design solutions',
+  'UX/UI':        'visual hierarchy, hero impact, gradient effects, glassmorphism cards, scroll-reveal animations present and correct, floating elements, hover states on all interactive elements, consistent spacing scale (8px grid), color contrast WCAG AA, mobile responsiveness, hamburger menu works, typography scale and readability',
+  'Security':     'XSS prevention, no innerHTML with unsanitized user input, form input validation with error feedback, CSP readiness, no hardcoded credentials, safe event handler patterns',
+  'Code Quality': 'semantic HTML5 landmarks, DRY CSS with custom properties, IntersectionObserver properly implemented, no console.log left in, clean JS structure, no render-blocking patterns, Google Font loaded correctly',
+  'SEO':          'title tag relevant and descriptive, meta description present, exactly one H1, all sections have headings in correct hierarchy, lang attribute on html, Open Graph meta tags, descriptive alt texts or aria-labels on SVGs, smooth scroll on html element',
+  'Excellence':   'unique brand identity derived from the topic, wow factor in the hero, creative use of gradients/glows/shapes, micro-interactions that delight, copy that sounds like real marketing not placeholder text, overall professional agency-level polish',
 };
 
 export default async function handler(req, res) {
@@ -40,16 +40,26 @@ export default async function handler(req, res) {
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 512,
         stream: false,
-        system: `You are a strict ${reviewer} reviewer. Output valid JSON only — no other text.`,
+        system: `You are a brutally honest ${reviewer} expert reviewer for a professional web agency. Score 90+ only for genuinely exceptional work. Score below 70 freely when standards are not met. Output valid JSON only — no other text.`,
         messages: [{
           role: 'user',
-          content: `Review this website as ${reviewer} expert.
-Focus: ${focus}
+          content: `Review this website code as a strict ${reviewer} expert.
+
+SCORING GUIDE:
+- 90–100: Exceptional, agency-level quality, no meaningful issues
+- 75–89:  Good but has a few noticeable gaps
+- 60–74:  Mediocre — missing important elements or poor execution
+- below 60: Significant problems that hurt user experience or functionality
+
+Focus areas for ${reviewer}: ${focus}
+
 Website goal: "${description}"
 
 ${codeBlock}
 
-Return JSON only: {"score":<0-100>,"critical_issues":["..."],"suggestions":["..."]}`,
+List specific, actionable critical_issues (not vague — name the exact element, class, or section that needs fixing).
+
+Return JSON only: {"score":<0-100>,"critical_issues":["specific issue 1","specific issue 2"],"suggestions":["suggestion 1"]}`,
         }],
       }),
     });

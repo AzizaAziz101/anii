@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RocketDrive GmbH – Raketenproduzenten</title>
+  <meta name="description" content="RocketDrive GmbH – Innovativer Hersteller von Raketentriebwerken und Antriebssystemen für kommerzielle und wissenschaftliche Raumfahrt." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            space: {
+              900: '#020817',
+              800: '#0a1628',
+              700: '#0f2240',
+              600: '#1a3a5c',
+            },
+            rocket: {
+              400: '#f97316',
+              500: '#ea580c',
+              600: '#c2410c',
+            },
+            accent: {
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+            }
+          },
+          fontFamily: {
+            sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'spin-slow': 'spin 20s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-20px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* Hamburger menu animation */
+    .hamburger-bar {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      border-radius: 3px;
+      transition: transform 0.35s ease, opacity 0.35s ease, width 0.35s ease;
+      transform-origin: center;
+    }
+    .hamburger-open .bar1 {
+      transform: translateY(9px) rotate(45deg);
+    }
+    .hamburger-open .bar2 {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    .hamburger-open .bar3 {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Stars background */
+    .stars-bg {
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 70%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 10% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 85%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 65% 20%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 90%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(2px 2px at 55% 55%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #f97316, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Glow effect */
+    .glow-orange {
+      box-shadow: 0 0 30px rgba(249,115,22,0.4), 0 0 60px rgba(249,115,22,0.2);
+    }
+    .glow-blue {
+      box-shadow: 0 0 30px rgba(56,189,248,0.3), 0 0 60px rgba(56,189,248,0.1);
+    }
+
+    /* Nav scroll effect */
+    #navbar {
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+    }
+    #navbar.scrolled {
+      background-color: rgba(2, 8, 23, 0.95);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Card hover */
+    .product-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+    }
+
+    /* Timeline dot pulse */
+    .timeline-dot {
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(249,115,22,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(249,115,22,0); }
+    }
+
+    /* Flame animation */
+    @keyframes flame {
+      0%, 100% { height: 40px; opacity: 0.9; }
+      50% { height: 55px; opacity: 1; }
+    }
+    .flame {
+      animation: flame 0.8s ease-in-out infinite;
+    }
+
+    /* Form focus */
+    .form-input:focus {
+      outline: none;
+      border-color: #f97316;
+      box-shadow: 0 0 0 3px rgba(249,115,22,0.2);
+    }
+
+    /* Scroll indicator */
+    @keyframes bounce-arrow {
+      0%, 100% { transform: translateY(0) translateX(-50%); }
+      50% { transform: translateY(8px) translateX(-50%); }
+    }
+    .bounce-arrow {
+      animation: bounce-arrow 1.5s ease-in-out infinite;
+    }
+
+    /* Orbital ring */
+    @keyframes orbit {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .orbit-ring {
+      animation: orbit 15s linear infinite;
+    }
+    .orbit-ring-reverse {
+      animation: orbit 25s linear infinite reverse;
+    }
+
+    /* Mobile menu */
+    #mobile-menu {
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+    #mobile-menu.open {
+      max-height: 400px;
+      opacity: 1;
+    }
+
+    /* Success message */
+    #form-success {
+      display: none;
+    }
+    #form-success.show {
+      display: flex;
+    }
+
+    /* Error styles */
+    .field-error {
+      border-color: #ef4444 !important;
+    }
+    .error-msg {
+      color: #f87171;
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+    .error-msg.show {
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-space-900 text-white font-sans antialiased overflow-x-hidden">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="relative w-10 h-10">
+          <!-- Rocket SVG -->
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
+            <path d="M20 4C20 4 12 12 12 22H28C28 12 20 4 20 4Z" fill="#f97316"/>
+            <rect x="16" y="22" width="8" height="10" fill="#ea580c"/>
+            <path d="M12 26L8 32H16V22C14 22 12 24 12 26Z" fill="#f97316"/>
+            <path d="M28 26L32 32H24V22C26 22 28 24 28 26Z" fill="#f97316"/>
+            <circle cx="20" cy="16" r="3" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <span class="text-xl font-bold tracking-tight">
+          <span class="text-white">Rocket</span><span class="text-rocket-400">Drive</span>
+          <span class="text-gray-400 text-sm font-normal ml-1">GmbH</span>
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="hidden md:flex items-center gap-8">
+        <li><a href="#about" class="text-gray-300 hover:text-rocket-400 transition-colors duration-200 text-sm font-medium">Über Uns</a></li>
+        <li><a href="#products" class="text-gray-300 hover:text-rocket-400 transition-colors duration-200 text-sm font-medium">Produkte</a></li>
+        <li><a href="#stats" class="text-gray-300 hover:text-rocket-400 transition-colors duration-200 text-sm font-medium">Zahlen</a></li>
+        <li><a href="#timeline" class="text-gray-300 hover:text-rocket-400 transition-colors duration-200 text-sm font-medium">Geschichte</a></li>
+        <li><a href="#team" class="text-gray-300 hover:text-rocket-400 transition-colors duration-200 text-sm font-medium">Team</a></li>
+        <li><a href="#contact" class="bg-rocket-500 hover:bg-rocket-400 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:shadow-lg hover:shadow-rocket-500/30">Kontakt</a></li>
+      </ul>
+
+      <!-- Hamburger -->
+      <button id="hamburger-btn" class="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 rounded-lg hover:bg-white/10 transition-colors duration-200" aria-label="Menü öffnen" aria-expanded="false">
+        <span class="hamburger-bar bar1"></span>
+        <span class="hamburger-bar bar2"></span>
+        <span class="hamburger-bar bar3"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden">
+      <ul class="flex flex-col gap-1 pt-4 pb-2 px-2">
+        <li><a href="#about" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium">Über Uns</a></li>
+        <li><a href="#products" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium">Produkte</a></li>
+        <li><a href="#stats" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium">Zahlen & Fakten</a></li>
+        <li><a href="#timeline" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium">Geschichte</a></li>
+        <li><a href="#team" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium">Team</a></li>
+        <li><a href="#contact" class="mobile-nav-link block px-4 py-3 rounded-lg text-center bg-rocket-500 hover:bg-rocket-400 text-white font-semibold transition-all duration-200 mt-2">Kontakt aufnehmen</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden stars-bg" style="background-color: #020817;">
+    <!-- Gradient overlays -->
+    <div class="absolute inset-0 bg-gradient-to-b from-space-900 via-space-800 to-space-900"></div>
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-rocket-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-500/10 rounded-full blur-3xl"></div>
+
+    <!-- Orbital rings (decorative) -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div class="orbit-ring w-[600px] h-[600px] rounded-full border border-white/5 absolute"></div>
+      <div class="orbit-ring-reverse w-[800px] h-[800px] rounded-full border border-white/5 absolute"></div>
+      <!-- Orbiting dot -->
+      <div class="orbit-ring w-[600px] h-[600px] rounded-full absolute flex items-start justify-center">
+        <div class="w-2 h-2 bg-rocket-400 rounded-full mt-0 shadow-lg shadow-rocket-400/50 -mt-1"></div>
+      </div>
+    </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8 text-sm text-gray-300">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse-slow"></span>
+        Gegründet 2008 · Made in Germany
+      </div>
+
+      <!-- Rocket SVG Hero -->
+      <div class="flex justify-center mb-10" style="animation: float 6s ease-in-out infinite;">
+        <div class="relative">
+          <svg viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-28 h-40 drop-shadow-2xl">
+            <!-- Body -->
+            <path d="M60 10C60 10 35 45 35 95H85C85 45 60 10 60 10Z" fill="url(#rocketGrad1)"/>
+            <!-- Nose cone -->
+            <path d="M60 10L45 50H75L60 10Z" fill="#38bdf8"/>
+            <!-- Window -->
+            <circle cx="60" cy="65" r="10" fill="#0ea5e9" stroke="#7dd3fc" stroke-width="2"/>
+            <circle cx="60" cy="65" r="6" fill="#e0f2fe"/>
+            <!-- Body lower -->
+            <rect x="35" y="95" width="50" height="55" rx="4" fill="url(#rocketGrad2)"/>
+            <!-- Fins left -->
+            <path d="M35 110L15 145H35V110Z" fill="#f97316"/>
+            <!-- Fins right -->
+            <path d="M85 110L105 145H85V110Z" fill="#f97316"/>
+            <!-- Exhaust -->
+            <rect x="48" y="150" width="24" height="15" rx="3" fill="#374151"/>
+            <!-- Flame -->
+            <ellipse cx="52" cy="175" rx="5" ry="12" fill="url(#flameGrad1)" class="flame"/>
+            <ellipse cx="60" cy="178" rx="7" ry="15" fill="url(#flameGrad2)" class="flame" style="animation-delay: 0.1s;"/>
+            <ellipse cx="68" cy="175" rx="5" ry="12" fill="url(#flameGrad1)" class="flame" style="animation-delay: 0.2s;"/>
+            <!-- Stripes -->
+            <rect x="35" y="105" width="50" height="5" fill="#dc2626" opacity="0.6"/>
+            <rect x="35" y="125" width="50" height="5" fill="#dc2626" opacity="0.4"/>
+            <defs>
+              <linearGradient id="rocketGrad1" x1="35" y1="10" x2="85" y2="95" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#e2e8f0"/>
+                <stop offset="100%" stop-color="#94a3b8"/>
+              </linearGradient>
+              <linearGradient id="rocketGrad2" x1="35" y1="95" x2="85" y2="150" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#94a3b8"/>
+                <stop offset="100%" stop-color="#64748b"/>
+              </linearGradient>
+              <linearGradient id="flameGrad1" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                <stop offset="0%" stop-color="#fbbf24"/>
+                <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="flameGrad2" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                <stop offset="0%" stop-color="#fb923c"/>
+                <stop offset="50%" stop-color="#fbbf24"/>
+                <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
+        <span class="block text-white">Die Zukunft</span>
+        <span class="block gradient-text">der Raumfahrt</span>
+        <span class="block text-white">beginnt hier.</span>
+      </h1>
+
+      <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+        RocketDrive GmbH entwickelt und produziert hochmoderne Raketentriebwerke und Antriebssysteme für kommerzielle Satellitenmissionen, wissenschaftliche Forschung und bemannte Raumfahrt.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#products" class="group inline-flex items-center gap-2 bg-rocket-500 hover:bg-rocket-400 text-white font-bold px-8 py-4 rounded-full text-lg transition-all duration-300 hover:shadow-xl hover:shadow-rocket-500/40 glow-orange">
+          Unsere Produkte
+          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+        <a href="#contact" class="inline-flex items-center gap-2 border border-white/20 hover:border-accent-400 text-white hover:text-accent-400 font-bold px-8 py-4 rounded-full text-lg transition-all duration-300 hover:bg-accent-400/10">
+          Kontakt aufnehmen
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-10 left-1/2 bounce-arrow">
+      <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about" class="py-24 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-space-900 to-space-800"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="reveal-left">
+          <span class="text-rocket-400 font-semibold text-sm uppercase tracking-widest mb-4 block">Über RocketDrive</span>
+          <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">
+            Präzision trifft<br/>
+            <span class="gradient-text">Leidenschaft</span>
+          </h2>
+          <p class="text-gray-400 text-lg leading-relaxed mb-6">
+            Seit 2008 entwickeln wir am Standort Bremen revolutionäre Antriebstechnologien, die Grenzen verschieben. Unsere Ingenieure kombinieren jahrzehntelanges Fachwissen mit modernsten Fertigungsverfahren.
+          </p>
+          <p class="text-gray-400 text-lg leading-relaxed mb-8">
+            Von der ersten Konzeptidee bis zum abgeschlossenen Zertifizierungsprozess begleiten wir unsere Kunden durch jede Phase der Entwicklung. Qualität, Zuverlässigkeit und Innovation sind keine Versprechen – sie sind unsere DNA.
+          </p>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="bg-space-700/50 border border-white/10 rounded-2xl p-5">
+              <div class="text-rocket-400 text-3xl font-black mb-1">ISO</div>
+              <div class="text-gray-300 text-sm">9001:2015 zertifiziert</div>
+            </div>
+            <div class="bg-space-700/50 border border-white/10 rounded-2xl p-5">
+              <div class="text-accent-400 text-3xl font-black mb-1">ESA</div>
+              <div class="text-gray-300 text-sm">Qualifizierter Zulieferer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal-right">
+          <div class="relative">
+            <!-- Feature cards -->
+            <div class="grid grid-cols-1 gap-4">
+              <div class="bg-space-700/60 border border-white/10 rounded-2xl p-6 flex items-start gap-4 hover:border-rocket-400/40 transition-colors duration-300">
+                <div class="w-12 h-12 bg-rocket-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-rocket-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text
