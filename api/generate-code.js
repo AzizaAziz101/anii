@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     return res.end();
   }
 
-  const { description, cssMode = 'css', pageMode = 'single', feedback = [], previousFiles = null } = req.body || {};
+  const { description, cssMode = 'css', pageMode = 'single', feedback = [] } = req.body || {};
   if (!description?.trim()) {
     send({ type: 'error', message: 'description required' });
     return res.end();
@@ -99,32 +99,7 @@ Output ONLY file blocks in this exact format — zero explanations, zero markdow
 [complete file content]
 ---END FILE---`;
 
-  const isImprovement = previousFiles && Object.keys(previousFiles).length > 0 && feedback.length > 0;
-
-  let userPrompt;
-
-  if (isImprovement) {
-    // Improvement mode: hand the previous code to Claude and ask for targeted fixes
-    const prevBlock = Object.entries(previousFiles)
-      .map(([name, content]) => `---FILE: ${name}---\n${content}\n---END FILE---`)
-      .join('\n\n');
-
-    userPrompt = `You are improving an existing website. Do NOT start from scratch — take the code below and fix every listed issue.
-
-ORIGINAL BRIEF: "${description.trim()}"
-${cssInstr}
-${pageInstr}
-
-━━━ CURRENT CODE (improve this) ━━━
-${prevBlock}
-
-━━━ EXPERT CRITIQUE — fix every single point ━━━
-${feedback.map((x, i) => `${i + 1}. ${x}`).join('\n')}
-
-Output the complete improved files. Keep everything that works. Only change what the critique targets.`;
-  } else {
-    // Fresh generation
-    userPrompt = `Build a stunning, complete website for:
+  let userPrompt = `Build a stunning, complete website for:
 
 "${description.trim()}"
 
@@ -132,6 +107,9 @@ ${cssInstr}
 ${pageInstr}
 
 Design brief: Study the description carefully. Derive the brand colors, typography mood, illustration style, and copy tone directly from the topic. Every design decision must feel purposeful and tailored — not generic.`;
+
+  if (feedback.length > 0) {
+    userPrompt += `\n\n━━━ EXPERT CRITIQUE — implement every single point ━━━\n${feedback.map((x, i) => `${i + 1}. ${x}`).join('\n')}`;
   }
 
   try {

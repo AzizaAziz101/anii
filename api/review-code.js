@@ -37,8 +37,8 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1024,
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 768,
         stream: false,
         system: `You are a brutally honest ${reviewer} expert at a top-tier web agency. You give specific, code-level critique — never vague. Output valid JSON only — no other text.`,
         messages: [{
