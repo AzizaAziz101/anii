@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daily AI — Assistenten</title>
+  <title>WebForge — AI Website Generator</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -13,763 +17,743 @@
       --bg:        #0a0a0a;
       --surface:   #111111;
       --surface-h: #161616;
-      --border:    rgba(255,255,255,0.09);
-      --border-h:  rgba(255,255,255,0.15);
+      --surface-2: #1c1c1c;
+      --border:    rgba(255,255,255,0.08);
+      --border-h:  rgba(255,255,255,0.14);
       --text:      #e4e4e4;
       --muted:     #5c5c5c;
-      --muted-2:   #3a3a3a;
+      --muted-2:   #333333;
+      --accent:    #7c3aed;
+      --accent-h:  #6d28d9;
+      --accent-dim: rgba(124,58,237,0.12);
+      --green:     #22c55e;
+      --yellow:    #f59e0b;
+      --red:       #ef4444;
+      --code-bg:   #0d1117;
     }
 
-    html, body {
-      height: 100%;
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-    }
+    html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
 
-    .hidden { display: none !important; }
+    /* ── App shell ── */
+    .app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-    /* ─────────────────────────────
-       HOME VIEW
-    ───────────────────────────── */
-    #viewHome {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .home-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 24px 40px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .home-logo {
-      width: 28px; height: 28px;
-      background: #e4e4e4;
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700; color: #0a0a0a;
-      letter-spacing: -.03em;
-    }
-
-    .home-title { font-size: 14px; font-weight: 500; color: var(--text); }
-
-    .home-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 24px;
-    }
-
-    .home-headline {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-
-    .home-h1 {
-      font-size: 32px;
-      font-weight: 600;
-      letter-spacing: -.03em;
-      color: var(--text);
-      text-align: center;
-      line-height: 1.25;
-      margin-bottom: 12px;
-    }
-
-    .home-sub {
-      font-size: 14px;
-      color: var(--muted);
-      text-align: center;
-      max-width: 420px;
-      line-height: 1.6;
-      margin-bottom: 52px;
-    }
-
-    .bot-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      width: 100%;
-      max-width: 900px;
-    }
-
-    .bot-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 28px 24px 24px;
-      cursor: pointer;
-      transition: background .15s, border-color .15s, transform .1s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .bot-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--accent);
-    }
-
-    .bot-card:hover {
-      background: var(--surface-h);
-      border-color: var(--border-h);
-      transform: translateY(-1px);
-    }
-
-    .card-icon {
-      font-size: 20px;
-      margin-bottom: 18px;
-      color: var(--accent);
-    }
-
-    .card-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: -.02em;
-      margin-bottom: 8px;
-    }
-
-    .card-desc {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-
-    .card-traits {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 24px;
-    }
-
-    .trait {
-      font-size: 11px;
-      font-weight: 500;
-      padding: 3px 9px;
-      border-radius: 4px;
-      background: rgba(255,255,255,0.05);
-      color: var(--muted);
-      border: 1px solid var(--border);
-      text-transform: uppercase;
-      letter-spacing: .06em;
-    }
-
-    .card-cta {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      letter-spacing: -.01em;
-    }
-
-    /* ─────────────────────────────
-       CHAT VIEW
-    ───────────────────────────── */
-    #viewChat {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .chat-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 0 28px;
-      height: 56px;
+    /* ── Header ── */
+    .header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0 28px; height: 52px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
-
-    .back-btn {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 13px; color: var(--muted); cursor: pointer;
-      border: 1px solid var(--border); border-radius: 6px;
-      padding: 5px 10px;
-      background: none;
-      transition: color .15s, border-color .15s;
-    }
-    .back-btn:hover { color: var(--text); border-color: var(--border-h); }
-
-    .chat-bot-info {
-      display: flex; align-items: center; gap: 10px;
-    }
-
-    .bot-badge {
-      width: 28px; height: 28px;
-      border-radius: 6px;
+    .logo {
+      width: 26px; height: 26px; border-radius: 6px;
       background: var(--accent);
       display: flex; align-items: center; justify-content: center;
       font-size: 13px; font-weight: 700; color: #fff;
     }
+    .header-name { font-size: 14px; font-weight: 600; letter-spacing: -.02em; }
+    .header-sep { color: var(--muted-2); font-size: 13px; }
+    .header-tag { font-size: 12px; color: var(--muted); }
 
-    .chat-bot-name {
-      font-size: 14px; font-weight: 600; letter-spacing: -.02em;
+    /* ── Workspace ── */
+    .workspace { display: flex; flex: 1; overflow: hidden; }
+
+    /* ── Input panel ── */
+    .panel-input {
+      width: 360px; flex-shrink: 0;
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      overflow-y: auto; padding: 24px 22px; gap: 18px;
+      scrollbar-width: thin; scrollbar-color: var(--muted-2) transparent;
     }
 
-    .chat-bot-tag {
-      font-size: 11px; color: var(--muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 4px; padding: 2px 7px;
-      text-transform: uppercase; letter-spacing: .06em; font-weight: 500;
+    .field-label {
+      font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: var(--muted); margin-bottom: 7px;
     }
 
-    .status-pill {
-      margin-left: auto;
-      display: flex; align-items: center; gap: 5px;
-      font-size: 11px; color: var(--muted);
+    .desc-textarea {
+      width: 100%; min-height: 148px; max-height: 260px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 11px 13px;
+      color: var(--text); font-family: 'Inter', sans-serif;
+      font-size: 13px; line-height: 1.65; resize: vertical; outline: none;
+      transition: border-color .15s;
     }
-    .status-dot { width: 5px; height: 5px; border-radius: 50%; background: #22c55e; }
+    .desc-textarea:focus { border-color: var(--accent); }
+    .desc-textarea::placeholder { color: var(--muted); }
 
-    /* Messages */
-    .messages {
-      flex: 1; overflow-y: auto; padding: 32px 28px;
-      display: flex; flex-direction: column; gap: 0;
-      scrollbar-width: thin; scrollbar-color: #1e1e1e transparent;
+    .char-hint { font-size: 11px; color: var(--muted-2); text-align: right; margin-top: 4px; }
+
+    /* Toggle group */
+    .toggle-group {
+      display: flex; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 7px; padding: 3px; gap: 2px;
     }
-    .messages::-webkit-scrollbar { width: 3px; }
-    .messages::-webkit-scrollbar-thumb { background: #1e1e1e; border-radius: 4px; }
+    .toggle-btn {
+      flex: 1; padding: 6px 10px; border-radius: 5px; border: 1px solid transparent;
+      background: transparent; color: var(--muted);
+      font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 500;
+      cursor: pointer; transition: all .14s;
+    }
+    .toggle-btn.active { background: var(--surface-2); color: var(--text); border-color: var(--border-h); }
+    .toggle-btn:hover:not(.active) { color: var(--text); }
 
-    /* Empty state */
-    .empty-state {
+    /* Generate button */
+    .gen-btn {
+      width: 100%; padding: 11px; border-radius: 8px; border: none;
+      background: var(--accent); color: #fff;
+      font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600;
+      cursor: pointer; letter-spacing: -.01em;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background .14s, transform .1s, opacity .14s;
+    }
+    .gen-btn:hover:not(:disabled) { background: var(--accent-h); }
+    .gen-btn:active:not(:disabled) { transform: scale(.98); }
+    .gen-btn:disabled { opacity: .38; cursor: not-allowed; }
+
+    .spinner {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.28); border-top-color: #fff;
+      animation: spin .65s linear infinite; display: none;
+    }
+    .gen-btn.loading .spinner { display: block; }
+    .gen-btn.loading .btn-label { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Example chips */
+    .examples { display: flex; flex-direction: column; gap: 5px; }
+    .example-chip {
+      padding: 8px 10px; border-radius: 6px;
+      background: var(--surface); border: 1px solid var(--border);
+      font-size: 12px; color: var(--muted); cursor: pointer;
+      line-height: 1.55; transition: color .14s, border-color .14s, background .14s;
+    }
+    .example-chip:hover { color: var(--text); border-color: var(--border-h); background: var(--surface-h); }
+
+    /* ── Output panel ── */
+    .panel-output { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+    /* State wrappers */
+    .state { display: none; flex-direction: column; height: 100%; }
+    .state.active { display: flex; }
+
+    /* ── Idle ── */
+    .idle-body {
       flex: 1; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center; padding: 40px;
-      gap: 10px;
+      text-align: center; padding: 40px; gap: 10px;
     }
-    .empty-icon {
+    .idle-icon {
+      width: 54px; height: 54px; border-radius: 14px;
+      background: var(--accent-dim); border: 1px solid rgba(124,58,237,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 8px;
+    }
+    .idle-body h2 { font-size: 17px; font-weight: 600; letter-spacing: -.02em; }
+    .idle-body p { font-size: 13px; color: var(--muted); max-width: 400px; line-height: 1.65; }
+
+    .pipeline {
+      display: flex; margin-top: 24px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+    }
+    .pip-step {
+      flex: 1; padding: 13px 14px; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .pip-step:last-child { border-right: none; }
+    .pip-icon { font-size: 15px; margin-bottom: 5px; }
+    .pip-label { font-size: 12px; font-weight: 500; margin-bottom: 2px; }
+    .pip-desc { font-size: 11px; color: var(--muted); }
+
+    /* ── Running ── */
+    .running-body {
+      flex: 1; overflow-y: auto; padding: 24px 28px;
+      display: flex; flex-direction: column; gap: 16px;
+      scrollbar-width: thin; scrollbar-color: var(--muted-2) transparent;
+    }
+
+    .run-header { display: flex; align-items: flex-start; gap: 12px; }
+    .run-spinner {
+      width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; margin-top: 1px;
+      border: 2px solid var(--muted-2); border-top-color: var(--accent);
+      animation: spin .65s linear infinite;
+    }
+    .run-title { font-size: 14px; font-weight: 600; letter-spacing: -.02em; }
+    .run-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* Loop card */
+    .loop-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    }
+    .loop-card-head {
+      padding: 10px 14px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .loop-pill {
+      background: var(--accent-dim); color: #a78bfa;
+      border: 1px solid rgba(124,58,237,.25); border-radius: 5px;
+      padding: 2px 8px; font-size: 11px; font-weight: 600; letter-spacing: .02em;
+    }
+    .loop-score { font-size: 13px; font-weight: 700; }
+
+    .loop-card-body { padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
+
+    /* Stage row */
+    .stage-row { display: flex; align-items: center; gap: 10px; font-size: 12.5px; padding: 3px 0; }
+    .stage-ind {
+      width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700;
+    }
+    .stage-ind.spin {
+      border: 2px solid var(--muted-2); border-top-color: var(--accent);
+      animation: spin .65s linear infinite;
+    }
+    .stage-ind.done { background: rgba(34,197,94,.12); color: var(--green); border: 1px solid rgba(34,197,94,.22); }
+    .stage-ind.wait { background: var(--surface-2); border: 1px solid var(--border); color: var(--muted-2); }
+
+    .stage-name { flex: 1; }
+    .stage-name.dim { color: var(--muted); }
+    .stage-score { font-size: 12px; font-weight: 700; width: 32px; text-align: right; }
+
+    /* Score colors */
+    .c-green { color: var(--green); }
+    .c-yellow { color: var(--yellow); }
+    .c-red { color: var(--red); }
+
+    /* ── Done ── */
+    .done-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .done-left { display: flex; align-items: center; gap: 10px; }
+    .done-score-badge {
+      padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      border: 1px solid transparent;
+    }
+    .done-title-text { font-size: 13px; font-weight: 600; letter-spacing: -.02em; }
+
+    .done-actions { display: flex; align-items: center; gap: 7px; }
+
+    .icon-btn {
+      display: flex; align-items: center; gap: 5px;
+      padding: 5px 11px; border-radius: 6px;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); font-family: 'Inter', sans-serif; font-size: 12px;
+      cursor: pointer; transition: color .14s, border-color .14s;
+      white-space: nowrap;
+    }
+    .icon-btn:hover { color: var(--text); border-color: var(--border-h); }
+    .icon-btn.copied { color: var(--green); border-color: rgba(34,197,94,.3); }
+
+    /* File tabs */
+    .file-tabs {
+      display: flex; gap: 1px; padding: 9px 20px 0;
+      border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .file-tabs::-webkit-scrollbar { display: none; }
+    .file-tab {
+      padding: 5px 13px; border-radius: 6px 6px 0 0;
+      border: 1px solid transparent; border-bottom: none;
+      font-size: 12px; font-family: 'JetBrains Mono', monospace;
+      color: var(--muted); cursor: pointer; white-space: nowrap;
+      transition: color .14s, background .14s;
+    }
+    .file-tab.active {
+      background: var(--code-bg); color: var(--text);
+      border-color: var(--border); border-bottom-color: var(--code-bg);
+      margin-bottom: -1px;
+    }
+    .file-tab:hover:not(.active) { color: var(--text); }
+
+    /* File panels */
+    .file-panels { flex: 1; position: relative; overflow: hidden; }
+    .file-panel { display: none; flex-direction: column; position: absolute; inset: 0; }
+    .file-panel.active { display: flex; }
+
+    .code-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 18px; background: var(--surface);
+      border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .code-fname { font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--muted); }
+
+    .code-scroll { flex: 1; overflow: auto; background: var(--code-bg); }
+    .code-scroll pre {
+      margin: 0; padding: 18px 22px;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 12.5px; line-height: 1.72;
+    }
+    .code-scroll code { font-family: inherit; }
+    .hljs { background: transparent !important; padding: 0 !important; }
+
+    /* ── Error ── */
+    .error-body {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 40px; gap: 10px;
+    }
+    .error-icon {
       width: 48px; height: 48px; border-radius: 12px;
-      background: var(--accent);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; font-weight: 700; color: #fff;
-      margin-bottom: 8px;
+      background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2);
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+      margin-bottom: 6px;
     }
-    .empty-state h3 { font-size: 16px; font-weight: 600; letter-spacing: -.02em; }
-    .empty-state p  { font-size: 13px; color: var(--muted); max-width: 320px; line-height: 1.6; }
-
-    .starter-chips {
-      display: flex; flex-wrap: wrap; gap: 7px;
-      justify-content: center; margin-top: 12px;
-    }
-    .starter-chip {
+    .error-body h3 { font-size: 15px; font-weight: 600; }
+    .error-body p { font-size: 13px; color: var(--muted); max-width: 380px; line-height: 1.65; }
+    .retry-btn {
+      margin-top: 6px; padding: 8px 18px; border-radius: 7px;
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 6px; padding: 7px 13px;
-      font-size: 12px; color: var(--muted); cursor: pointer;
-      transition: color .15s, border-color .15s, background .15s;
+      color: var(--muted); font-family: 'Inter', sans-serif; font-size: 13px;
+      cursor: pointer; transition: color .14s, border-color .14s;
     }
-    .starter-chip:hover { color: var(--text); border-color: var(--border-h); background: var(--surface-h); }
+    .retry-btn:hover { color: var(--text); border-color: var(--border-h); }
 
-    /* Message rows */
-    .msg-row { display: flex; flex-direction: column; margin-bottom: 24px; animation: fadeUp .2s ease; }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
-
-    .msg-row.user { align-items: flex-end; }
-    .msg-row.ai   { align-items: flex-start; }
-
-    .msg-sender {
-      font-size: 11px; font-weight: 500; color: var(--muted);
-      letter-spacing: .06em; text-transform: uppercase;
-      margin-bottom: 6px; padding: 0 4px;
-    }
-
-    .msg-bubble {
-      max-width: 72%; padding: 11px 15px;
-      border-radius: 8px; font-size: 14px; line-height: 1.75;
-    }
-
-    .msg-row.user .msg-bubble {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-bottom-right-radius: 3px;
-      color: var(--text);
-    }
-
-    .msg-row.ai .msg-bubble {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 2px solid var(--accent);
-      border-bottom-left-radius: 3px;
-      color: var(--text);
-    }
-
-    .msg-bubble pre {
-      background: rgba(0,0,0,.4); border: 1px solid var(--border);
-      border-radius: 6px; padding: 12px; margin: 10px 0;
-      overflow-x: auto; font-size: 12px;
-    }
-    .msg-bubble pre code { font-family: 'JetBrains Mono','Fira Code',monospace; line-height: 1.6; }
-    .msg-bubble code {
-      font-family: 'JetBrains Mono','Fira Code',monospace;
-      font-size: 12px; background: rgba(255,255,255,.06);
-      padding: 1px 5px; border-radius: 4px;
-    }
-    .msg-bubble pre code { background: none; padding: 0; }
-    .msg-bubble strong { font-weight: 600; color: #ccc; }
-
-    /* Typing */
-    .typing-row { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 24px; }
-    .typing-bubble {
-      display: flex; align-items: center; gap: 4px;
-      padding: 12px 16px; background: var(--surface);
-      border: 1px solid var(--border); border-left: 2px solid var(--accent);
-      border-radius: 8px; border-bottom-left-radius: 3px;
-    }
-    .typing-bubble span {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--muted); animation: tdot 1.1s infinite;
-    }
-    .typing-bubble span:nth-child(2) { animation-delay: .18s; }
-    .typing-bubble span:nth-child(3) { animation-delay: .36s; }
-    @keyframes tdot { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-4px)} }
-
-    /* Input */
-    .input-area {
-      padding: 16px 28px 20px;
-      border-top: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .input-row {
-      display: flex; gap: 8px; align-items: flex-end;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; padding: 10px 12px;
-      transition: border-color .2s;
-    }
-    .input-row:focus-within { border-color: var(--border-h); }
-
-    textarea {
-      flex: 1; background: none; border: none; outline: none;
-      color: var(--text); font-family: 'Inter', sans-serif;
-      font-size: 14px; resize: none; min-height: 22px; max-height: 140px; line-height: 1.5;
-    }
-    textarea::placeholder { color: var(--muted-2); }
-
-    .send-btn {
-      width: 32px; height: 32px; border-radius: 6px; border: none;
-      background: var(--accent); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; transition: opacity .15s, transform .1s;
-    }
-    .send-btn:hover { opacity: .85; }
-    .send-btn:active { transform: scale(.93); }
-    .send-btn:disabled { opacity: .3; cursor: not-allowed; }
-    .send-btn svg { fill: #fff; }
-
-    .input-hint { font-size: 11px; color: var(--muted-2); margin-top: 8px; text-align: center; }
-
-    /* ─── Responsive ─── */
-    @media (max-width: 700px) {
-      .bot-grid { grid-template-columns: 1fr; max-width: 400px; }
-      .home-h1 { font-size: 24px; }
-      .messages { padding: 20px 16px; }
-      .chat-header { padding: 0 16px; }
-      .input-area { padding: 12px 16px 16px; }
-      .msg-bubble { max-width: 88%; }
-      .home-header { padding: 20px 20px; }
+    /* ── Responsive ── */
+    @media (max-width: 780px) {
+      .workspace { flex-direction: column; overflow-y: auto; }
+      .panel-input { width: 100%; border-right: none; border-bottom: 1px solid var(--border); overflow-y: visible; }
+      .panel-output { min-height: 65vh; }
+      .pipeline { flex-wrap: wrap; }
+      .pip-step { flex: 1 0 50%; border-bottom: 1px solid var(--border); }
+      .pip-step:nth-child(even) { border-right: none; }
+      .pip-step:nth-last-child(-n+2) { border-bottom: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════
-     HOME VIEW
-═══════════════════════════════════ -->
-<div id="viewHome">
-  <header class="home-header">
-    <div class="home-logo">AI</div>
-    <span class="home-title">Daily Assistenten</span>
-  </header>
-  <main class="home-main">
-    <p class="home-headline">Persönliche KI-Assistenten</p>
-    <h1 class="home-h1">Drei Charaktere.<br>Ein Ziel.</h1>
-    <p class="home-sub">Wähle den Assistenten, der zu deiner aktuellen Situation passt. Jeder verfolgt einen anderen Ansatz, um dich täglich weiterzubringen.</p>
-    <div class="bot-grid" id="botGrid"></div>
-  </main>
-</div>
+<div class="app">
 
-<!-- ═══════════════════════════════════
-     CHAT VIEW
-═══════════════════════════════════ -->
-<div id="viewChat" class="hidden">
-  <header class="chat-header">
-    <button class="back-btn" onclick="goHome()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      Übersicht
-    </button>
-    <div class="chat-bot-info">
-      <div class="bot-badge" id="chatBadge"></div>
-      <span class="chat-bot-name" id="chatName"></span>
-      <span class="chat-bot-tag" id="chatTag"></span>
-    </div>
-    <div class="status-pill">
-      <div class="status-dot"></div>
-      <span>Aktiv</span>
-    </div>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">W</div>
+    <span class="header-name">WebForge</span>
+    <span class="header-sep">·</span>
+    <span class="header-tag">AI Website Generator</span>
   </header>
 
-  <div class="messages" id="messages"></div>
+  <div class="workspace">
 
-  <div class="input-area">
-    <div class="input-row">
-      <textarea id="input" placeholder="Nachricht eingeben…" rows="1"
-        onkeydown="handleKey(event)" oninput="grow(this)"></textarea>
-      <button class="send-btn" id="sendBtn" onclick="send()">
-        <svg width="14" height="14" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    <!-- ═══ INPUT PANEL ═══ -->
+    <div class="panel-input">
+
+      <div>
+        <div class="field-label">Website beschreiben</div>
+        <textarea class="desc-textarea" id="descInput" rows="6"
+          placeholder="Beschreibe deine Wunsch-Website so detailliert wie möglich...
+
+z.B. Dunkles Portfolio für einen Fotografen — Hero mit Fullscreen-Bild, Galerie-Grid, About-Section und Kontaktformular."
+          oninput="onInput(this)"></textarea>
+        <div class="char-hint"><span id="charCount">0</span> Zeichen</div>
+      </div>
+
+      <div>
+        <div class="field-label">CSS Framework</div>
+        <div class="toggle-group">
+          <button class="toggle-btn active" data-g="css" data-v="css" onclick="pick('css',this)">Vanilla CSS</button>
+          <button class="toggle-btn"        data-g="css" data-v="tailwind" onclick="pick('css',this)">Tailwind CSS</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="field-label">Seitenstruktur</div>
+        <div class="toggle-group">
+          <button class="toggle-btn active" data-g="pages" data-v="single" onclick="pick('pages',this)">Single Page</button>
+          <button class="toggle-btn"        data-g="pages" data-v="multi"  onclick="pick('pages',this)">Multi Page</button>
+        </div>
+      </div>
+
+      <button class="gen-btn" id="genBtn" onclick="generate()">
+        <div class="spinner"></div>
+        <span class="btn-label">✦ &nbsp;Website generieren</span>
       </button>
+
+      <div>
+        <div class="field-label">Beispiele</div>
+        <div class="examples">
+          <div class="example-chip" onclick="useExample(this)">Minimalistisches Portfolio für einen UX Designer mit Case Studies, Skills und Kontaktformular</div>
+          <div class="example-chip" onclick="useExample(this)">SaaS Landing Page für ein KI-Produktivitäts-Tool mit Hero, Features, Pricing und FAQ</div>
+          <div class="example-chip" onclick="useExample(this)">Persönlicher Blog mit Artikel-Übersicht, Dark/Light Mode Toggle und Newsletter-Signup</div>
+          <div class="example-chip" onclick="useExample(this)">Restaurant-Website mit interaktivem Menü, Reservierungsformular, Foto-Galerie und Standortkarte</div>
+        </div>
+      </div>
+
     </div>
-    <p class="input-hint">Enter senden &nbsp;·&nbsp; Shift+Enter Zeilenumbruch</p>
+
+    <!-- ═══ OUTPUT PANEL ═══ -->
+    <div class="panel-output">
+
+      <!-- Idle -->
+      <div class="state active" id="stateIdle">
+        <div class="idle-body">
+          <div class="idle-icon">✦</div>
+          <h2>Dein KI-Webentwickler</h2>
+          <p>Beschreibe deine Website links und klick auf Generieren. Der Agent erstellt den Code und optimiert ihn in bis zu 3 Runden mit 5 Reviewern.</p>
+          <div class="pipeline">
+            <div class="pip-step"><div class="pip-icon">⚡</div><div class="pip-label">Code erstellen</div><div class="pip-desc">Komplett + responsive</div></div>
+            <div class="pip-step"><div class="pip-icon">🔍</div><div class="pip-label">5 Reviews</div><div class="pip-desc">UX · Security · SEO …</div></div>
+            <div class="pip-step"><div class="pip-icon">🔄</div><div class="pip-label">Optimieren</div><div class="pip-desc">Bis Score ≥ 88 / 100</div></div>
+            <div class="pip-step"><div class="pip-icon">✓</div><div class="pip-label">Ausgabe</div><div class="pip-desc">Fertiger Quellcode</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Running -->
+      <div class="state" id="stateRunning">
+        <div class="running-body" id="runBody">
+          <div class="run-header">
+            <div class="run-spinner"></div>
+            <div>
+              <div class="run-title" id="runTitle">Generierung startet…</div>
+              <div class="run-sub"  id="runSub"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div class="state" id="stateDone">
+        <div class="done-topbar">
+          <div class="done-left">
+            <span class="done-score-badge" id="doneBadge"></span>
+            <span class="done-title-text">Website generiert</span>
+          </div>
+          <div class="done-actions">
+            <button class="icon-btn" id="copyAllBtn" onclick="copyAll()">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Alle kopieren
+            </button>
+            <button class="icon-btn" onclick="reset()">Neu generieren</button>
+          </div>
+        </div>
+        <div class="file-tabs"   id="fileTabs"></div>
+        <div class="file-panels" id="filePanels"></div>
+      </div>
+
+      <!-- Error -->
+      <div class="state" id="stateError">
+        <div class="error-body">
+          <div class="error-icon">⚠</div>
+          <h3>Generierung fehlgeschlagen</h3>
+          <p id="errMsg"></p>
+          <button class="retry-btn" onclick="reset()">Erneut versuchen</button>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
 <script>
-/* ══════════════════════════════════════
-   BOT DEFINITIONS
-══════════════════════════════════════ */
-const BOTS = [
-  {
-    id: 'zielstrebig',
-    name: 'Zielstrebig',
-    tag: 'Performance',
-    icon: '↑',
-    accent: '#c2830a',
-    desc: 'Direkt und fordernd. Hält dich konsequent auf Kurs und lässt keine Ausreden gelten.',
-    traits: ['Direkt', 'Fordernd', 'Strukturiert'],
-    starters: [
-      'Was sind meine Top-3-Prioritäten heute?',
-      'Ich prokrastiniere bei einer Aufgabe — hilf mir.',
-      'Erstelle mir einen fokussierten Tagesplan.',
-    ],
-    system: `Du bist ein hochperformanter persönlicher Coach mit der Mentalität eines Spitzensportlers. Du bist direkt, präzise und duldest keine Ausreden.
+/* ── State ── */
+let cssMode   = 'css';
+let pageMode  = 'single';
+let files     = {};
+let genDone   = false;
 
-Deine Aufgabe:
-- Den Nutzer zu Höchstleistungen antreiben
-- Prokrastination sofort identifizieren und durchbrechen
-- Klare, umsetzbare Aktionspläne erstellen
-- Konsequente Rechenschaft einfordern
+/* ── Helpers ── */
+const $ = (id) => document.getElementById(id);
 
-Dein Stil: Kurz. Klar. Fordernd aber fair. Komm sofort zum Punkt. Wenn der Nutzer Ausreden nennt, weise direkt darauf hin. Strukturiere Antworten mit klaren nächsten Schritten. Keine langen Einleitungen.
-
-Antworte auf Deutsch. Maximal prägnant.`
-  },
-  {
-    id: 'wohltuend',
-    name: 'Wohltuend',
-    tag: 'Fürsorge',
-    icon: '◯',
-    accent: '#0d7a5f',
-    desc: 'Einfühlsam und unterstützend. Motiviert mit Verständnis und ganzheitlichem Blick.',
-    traits: ['Empathisch', 'Motivierend', 'Ausgewogen'],
-    starters: [
-      'Ich fühle mich heute überfordert.',
-      'Wie finde ich mehr Energie für meine Aufgaben?',
-      'Hilf mir, meinen Tag stressfrei zu starten.',
-    ],
-    system: `Du bist ein einfühlsamer persönlicher Assistent und Life-Coach. Du erkennst emotionale Zustände und schaffst einen sicheren, unterstützenden Raum.
-
-Deine Stärken:
-- Mitgefühl und echtes Verständnis zeigen
-- Unterstützung mit sanfter Motivation balancieren
-- Erschöpfung erkennen und bei Regeneration helfen
-- Fortschritte feiern, auch kleine
-- Auf Ziele hinarbeiten mit ganzheitlichem Blick auf Wohlbefinden
-
-Dein Stil: Warm, aufmerksam, menschlich. Du fragst nach dem Befinden. Du gibst praktische Hilfe, ohne die Person zu überfordern. Du feierst Schritte in die richtige Richtung.
-
-Antworte auf Deutsch. Warm und authentisch.`
-  },
-  {
-    id: 'nonlinear',
-    name: 'Nonlinear',
-    tag: 'Perspektiven',
-    icon: '◇',
-    accent: '#6d28d9',
-    desc: 'Kreativ und unkonventionell. Stellt Grundannahmen in Frage und öffnet neue Denkräume.',
-    traits: ['Kreativ', 'Provokativ', 'Systemisch'],
-    starters: [
-      'Was übersehe ich bei meinem aktuellen Problem?',
-      'Stelle meine heutigen Pläne in Frage.',
-      'Welche versteckten Annahmen halte ich für wahr?',
-    ],
-    system: `Du bist ein kreativer Querdenker und Systemdenker. Deine Superkraft: Du erkennst Muster die andere übersehen, stellst Grundannahmen in Frage und bietest unerwartete Perspektiven.
-
-Du denkst in: Systemen, Loops, Paradoxien, First Principles, indirekten Effekten.
-
-Deine Methoden:
-- Mit einer unerwarteten Gegenfrage starten
-- Annahmen explizit benennen und hinterfragen
-- Abstrakte Muster auf konkrete Situationen anwenden
-- Mehrere widersprüchliche Perspektiven gleichzeitig halten
-- Konventionelle Lösungen auf den Kopf stellen
-
-Dein Stil: Intellektuell stimulierend. Manchmal provokativ. Immer erhellend. Hilf dem Nutzer, aus eingefahrenen Denkmustern auszubrechen.
-
-Antworte auf Deutsch. Unkonventionell aber präzise.`
-  }
-];
-
-/* ══════════════════════════════════════
-   STATE
-══════════════════════════════════════ */
-let currentBot = null;
-let histories  = {};  // per-bot message history
-let busy       = false;
-
-BOTS.forEach(b => { histories[b.id] = []; });
-
-/* ══════════════════════════════════════
-   INIT — render cards
-══════════════════════════════════════ */
-(function initCards() {
-  const grid = document.getElementById('botGrid');
-  BOTS.forEach((bot, i) => {
-    const card = document.createElement('div');
-    card.className = 'bot-card';
-    card.style.setProperty('--accent', bot.accent);
-    card.onclick = () => openBot(i);
-    card.innerHTML = `
-      <div class="card-icon">${bot.icon}</div>
-      <div class="card-name">${bot.name}</div>
-      <div class="card-desc">${bot.desc}</div>
-      <div class="card-traits">${bot.traits.map(t => `<span class="trait">${t}</span>`).join('')}</div>
-      <span class="card-cta">Gespräch starten →</span>
-    `;
-    grid.appendChild(card);
-  });
-})();
-
-/* ══════════════════════════════════════
-   NAVIGATION
-══════════════════════════════════════ */
-function openBot(idx) {
-  currentBot = BOTS[idx];
-  document.documentElement.style.setProperty('--accent', currentBot.accent);
-
-  document.getElementById('chatBadge').textContent = currentBot.icon;
-  document.getElementById('chatBadge').style.background = currentBot.accent;
-  document.getElementById('chatName').textContent = currentBot.name;
-  document.getElementById('chatTag').textContent = currentBot.tag;
-
-  document.getElementById('viewHome').classList.add('hidden');
-  document.getElementById('viewChat').classList.remove('hidden');
-
-  renderMessages();
-  document.getElementById('input').focus();
+function setState(name) {
+  ['Idle','Running','Done','Error'].forEach(s =>
+    $(`state${s}`).classList.toggle('active', s.toLowerCase() === name)
+  );
 }
 
-function goHome() {
-  document.getElementById('viewChat').classList.add('hidden');
-  document.getElementById('viewHome').classList.remove('hidden');
-  currentBot = null;
+function scoreClass(s) {
+  return s >= 88 ? 'c-green' : s >= 68 ? 'c-yellow' : 'c-red';
 }
 
-/* ══════════════════════════════════════
-   RENDER MESSAGES
-══════════════════════════════════════ */
-function renderMessages() {
-  const el = document.getElementById('messages');
-  el.innerHTML = '';
-  const hist = histories[currentBot.id];
+function safeId(str) {
+  return str.replace(/[^a-zA-Z0-9]/g, '_');
+}
 
-  if (hist.length === 0) {
-    const empty = document.createElement('div');
-    empty.className = 'empty-state';
-    empty.id = 'emptyState';
-    empty.innerHTML = `
-      <div class="empty-icon" style="background:${currentBot.accent}">${currentBot.icon}</div>
-      <h3>${currentBot.name}</h3>
-      <p>${currentBot.desc}</p>
-      <div class="starter-chips">
-        ${currentBot.starters.map(s => `<div class="starter-chip" onclick="useStarter(this)">${s}</div>`).join('')}
+/* ── Input handlers ── */
+function onInput(el) {
+  $('charCount').textContent = el.value.length;
+}
+
+function pick(group, btn) {
+  document.querySelectorAll(`[data-g="${group}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (group === 'css')   cssMode  = btn.dataset.v;
+  else                   pageMode = btn.dataset.v;
+}
+
+function useExample(el) {
+  const ta = $('descInput');
+  ta.value = el.textContent.trim();
+  onInput(ta);
+  ta.focus();
+}
+
+function reset() {
+  setState('idle');
+  $('genBtn').disabled = false;
+  $('genBtn').classList.remove('loading');
+}
+
+/* ── Generate ── */
+async function generate() {
+  const desc = $('descInput').value.trim();
+  if (!desc) { $('descInput').focus(); return; }
+
+  const btn = $('genBtn');
+  btn.disabled = true;
+  btn.classList.add('loading');
+  files     = {};
+  genDone   = false;
+
+  // Reset running panel
+  $('runBody').innerHTML = `
+    <div class="run-header">
+      <div class="run-spinner"></div>
+      <div>
+        <div class="run-title" id="runTitle">Generierung startet…</div>
+        <div class="run-sub"   id="runSub"></div>
       </div>
-    `;
-    el.appendChild(empty);
-    return;
-  }
+    </div>`;
 
-  hist.forEach(msg => addBubbleToDom(msg.role === 'user' ? 'user' : 'ai', fmtText(msg.content)));
-  scrollBottom();
-}
+  setState('running');
 
-/* ══════════════════════════════════════
-   DOM HELPERS
-══════════════════════════════════════ */
-function addBubbleToDom(role, html, returnBubble = false) {
-  document.getElementById('emptyState')?.remove();
-  const el = document.getElementById('messages');
-
-  const row = document.createElement('div');
-  row.className = `msg-row ${role}`;
-
-  const sender = document.createElement('div');
-  sender.className = 'msg-sender';
-  sender.textContent = role === 'user' ? 'Du' : currentBot.name;
-
-  const bubble = document.createElement('div');
-  bubble.className = 'msg-bubble';
-  bubble.style.setProperty('--accent', currentBot.accent);
-  bubble.innerHTML = html;
-
-  row.appendChild(sender);
-  row.appendChild(bubble);
-  el.appendChild(row);
-  scrollBottom();
-  return returnBubble ? bubble : null;
-}
-
-function showTyping() {
-  document.getElementById('emptyState')?.remove();
-  const el = document.getElementById('messages');
-  const row = document.createElement('div');
-  row.className = 'typing-row';
-  row.id = 'typingRow';
-
-  const sender = document.createElement('div');
-  sender.className = 'msg-sender';
-  sender.textContent = currentBot.name;
-
-  const bubble = document.createElement('div');
-  bubble.className = 'typing-bubble';
-  bubble.style.setProperty('--accent', currentBot.accent);
-  bubble.innerHTML = '<span></span><span></span><span></span>';
-
-  row.appendChild(sender);
-  row.appendChild(bubble);
-  el.appendChild(row);
-  scrollBottom();
-}
-function hideTyping() { document.getElementById('typingRow')?.remove(); }
-function scrollBottom() {
-  const el = document.getElementById('messages');
-  el.scrollTop = el.scrollHeight;
-}
-
-/* ══════════════════════════════════════
-   TEXT FORMATTING
-══════════════════════════════════════ */
-function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function fmtText(text) {
-  text = text.replace(/```(\w*)\n([\s\S]*?)```/g,
-    (_, lang, code) => `<pre><code>${esc(code.trim())}</code></pre>`);
-  text = text.replace(/`([^`\n]+)`/g, '<code>$1</code>');
-  text = text.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
-  text = text.replace(/\n/g, '<br>');
-  return text;
-}
-
-/* ══════════════════════════════════════
-   INPUT HANDLERS
-══════════════════════════════════════ */
-function grow(el) {
-  el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 140) + 'px';
-}
-function handleKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
-}
-function useStarter(el) {
-  document.getElementById('input').value = el.textContent;
-  send();
-}
-
-/* ══════════════════════════════════════
-   SEND MESSAGE
-══════════════════════════════════════ */
-async function send() {
-  if (busy || !currentBot) return;
-  const input = document.getElementById('input');
-  const text = input.value.trim();
-  if (!text) return;
-
-  input.value = ''; input.style.height = 'auto';
-  document.getElementById('sendBtn').disabled = true;
-  busy = true;
-
-  const hist = histories[currentBot.id];
-  hist.push({ role: 'user', content: text });
-  addBubbleToDom('user', fmtText(text));
-  showTyping();
+  const loopCards = {};
 
   try {
-    const res = await fetch('/api/chat', {
+    const res = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: hist, system: currentBot.system })
+      body: JSON.stringify({ description: desc, cssMode, pageMode }),
     });
 
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(`Fehler ${res.status}: ${errText}`);
-    }
+    if (!res.ok) throw new Error(`Server-Fehler ${res.status}`);
 
-    hideTyping();
-
-    // Create bubble, stream into it
-    const row = document.createElement('div');
-    row.className = 'msg-row ai';
-
-    const sender = document.createElement('div');
-    sender.className = 'msg-sender';
-    sender.textContent = currentBot.name;
-
-    const bubble = document.createElement('div');
-    bubble.className = 'msg-bubble';
-    bubble.style.setProperty('--accent', currentBot.accent);
-
-    row.appendChild(sender);
-    row.appendChild(bubble);
-    document.getElementById('messages').appendChild(row);
-
-    let full = '';
     const reader = res.body.getReader();
-    const dec = new TextDecoder();
+    const dec    = new TextDecoder();
+    let   buf    = '';
 
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
-      const lines = dec.decode(value).split('\n');
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop();
       for (const line of lines) {
         if (!line.startsWith('data: ')) continue;
         const raw = line.slice(6).trim();
-        if (raw === '[DONE]') continue;
-        try {
-          const obj = JSON.parse(raw);
-          if (obj.type === 'content_block_delta' && obj.delta?.type === 'text_delta') {
-            full += obj.delta.text;
-            bubble.innerHTML = fmtText(full);
-            scrollBottom();
-          }
-        } catch (_) {}
+        if (!raw) continue;
+        try { handleEvent(JSON.parse(raw), loopCards); } catch (_) {}
       }
     }
 
-    if (full) hist.push({ role: 'assistant', content: full });
+    if (!genDone) {
+      $('errMsg').textContent = 'Die Verbindung wurde unterbrochen. Bitte erneut versuchen.';
+      setState('error');
+    }
 
   } catch (err) {
-    hideTyping();
-    addBubbleToDom('ai',
-      `<strong>Fehler:</strong> ${esc(err.message)}<br><small style="color:#666">Stelle sicher, dass <code>ANTHROPIC_API_KEY</code> in den Vercel Umgebungsvariablen gesetzt ist.</small>`
-    );
+    $('errMsg').textContent = err.message;
+    setState('error');
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+  }
+}
+
+/* ── Event handler ── */
+function handleEvent(ev, loopCards) {
+  if (ev.type === 'progress') {
+    const { loop, total, stage, reviewer } = ev;
+
+    if (!loopCards[loop]) {
+      const card = document.createElement('div');
+      card.className = 'loop-card';
+      card.innerHTML = `
+        <div class="loop-card-head">
+          <span class="loop-pill">Loop ${loop} / ${total}</span>
+          <span class="loop-score" id="lscore${loop}"></span>
+        </div>
+        <div class="loop-card-body" id="lbody${loop}">
+          <div class="stage-row" id="genRow${loop}">
+            <div class="stage-ind spin" id="genInd${loop}"></div>
+            <span class="stage-name dim">Code wird generiert…</span>
+          </div>
+        </div>`;
+      $('runBody').appendChild(card);
+      loopCards[loop] = card;
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    if (stage === 'generating') {
+      setRunHeader(`Loop ${loop} — Code generieren`, `Durchlauf ${loop} von ${total}`);
+    }
+
+    if (stage === 'reviewing') {
+      // Mark generation done
+      const gi = $(`genInd${loop}`);
+      if (gi && gi.classList.contains('spin')) {
+        gi.className = 'stage-ind done';
+        gi.textContent = '✓';
+        gi.closest('.stage-row').querySelector('.stage-name').textContent = 'Code generiert';
+        gi.closest('.stage-row').querySelector('.stage-name').classList.remove('dim');
+      }
+
+      setRunHeader(`Loop ${loop} — Review: ${reviewer}`, 'Qualitätsprüfung läuft…');
+
+      const rowId = `rrow_${loop}_${safeId(reviewer)}`;
+      if (!$(rowId)) {
+        const row = document.createElement('div');
+        row.className = 'stage-row';
+        row.id = rowId;
+        row.innerHTML = `
+          <div class="stage-ind spin" id="rind_${safeId(reviewer)}${loop}"></div>
+          <span class="stage-name dim">${reviewer}</span>
+          <span class="stage-score" id="rscore_${safeId(reviewer)}${loop}">—</span>`;
+        $(`lbody${loop}`).appendChild(row);
+        row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
   }
 
-  busy = false;
-  document.getElementById('sendBtn').disabled = false;
-  document.getElementById('input').focus();
+  else if (ev.type === 'review_result') {
+    const { loop, reviewer, score } = ev;
+    const sid = safeId(reviewer);
+    const ind  = $(`rind_${sid}${loop}`);
+    const scEl = $(`rscore_${sid}${loop}`);
+    if (ind)  { ind.className = 'stage-ind done'; ind.textContent = '✓'; }
+    if (scEl) {
+      scEl.textContent = score;
+      scEl.className   = `stage-score ${scoreClass(score)}`;
+      const row = scEl.closest('.stage-row');
+      if (row) row.querySelector('.stage-name').classList.remove('dim');
+    }
+  }
+
+  else if (ev.type === 'loop_score') {
+    const { loop, score } = ev;
+    const el = $(`lscore${loop}`);
+    if (el) { el.textContent = `${score} / 100`; el.className = `loop-score ${scoreClass(score)}`; }
+    setRunHeader(`Loop ${loop} abgeschlossen — Score: ${score}`, score >= 88 ? '✓ Ziel erreicht!' : 'Nächster Optimierungsdurchlauf…');
+  }
+
+  else if (ev.type === 'done') {
+    genDone = true;
+    files   = ev.files;
+    showResult(ev.files, ev.finalScore, ev.loops);
+  }
+
+  else if (ev.type === 'error') {
+    $('errMsg').textContent = ev.message;
+    setState('error');
+  }
+}
+
+function setRunHeader(title, sub) {
+  const t = $('runTitle'), s = $('runSub');
+  if (t) t.textContent = title;
+  if (s) s.textContent = sub;
+}
+
+/* ── Show result ── */
+function showResult(fileMap, score, loops) {
+  const badge = $('doneBadge');
+  const isGood = score >= 88, isMid = score >= 68;
+  badge.textContent = `Score ${score} · ${loops} Loop${loops !== 1 ? 's' : ''}`;
+  badge.style.cssText = isGood
+    ? 'background:rgba(34,197,94,.1);color:#22c55e;border-color:rgba(34,197,94,.22)'
+    : isMid
+    ? 'background:rgba(245,158,11,.1);color:#f59e0b;border-color:rgba(245,158,11,.22)'
+    : 'background:rgba(239,68,68,.1);color:#ef4444;border-color:rgba(239,68,68,.22)';
+
+  const tabsEl   = $('fileTabs');
+  const panelsEl = $('filePanels');
+  tabsEl.innerHTML   = '';
+  panelsEl.innerHTML = '';
+
+  const names = Object.keys(fileMap);
+  const extLang = { html:'html', css:'css', js:'javascript', json:'json', ts:'typescript', md:'markdown' };
+
+  names.forEach((name, i) => {
+    const sid = safeId(name);
+
+    // Tab
+    const tab = document.createElement('div');
+    tab.className    = `file-tab${i === 0 ? ' active' : ''}`;
+    tab.textContent  = name;
+    tab.dataset.file = name;
+    tab.onclick      = () => switchTab(name);
+    tabsEl.appendChild(tab);
+
+    // Panel
+    const ext  = name.split('.').pop().toLowerCase();
+    const lang = extLang[ext] || 'plaintext';
+    let highlighted;
+    try {
+      highlighted = hljs.highlight(fileMap[name], { language: lang }).value;
+    } catch (_) {
+      highlighted = fileMap[name].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    const panel = document.createElement('div');
+    panel.className = `file-panel${i === 0 ? ' active' : ''}`;
+    panel.id        = `fp_${sid}`;
+    panel.innerHTML = `
+      <div class="code-bar">
+        <span class="code-fname">${name}</span>
+        <button class="icon-btn" id="cpbtn_${sid}" onclick="copyFile('${name}','${sid}')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Kopieren
+        </button>
+      </div>
+      <div class="code-scroll"><pre><code class="hljs language-${lang}">${highlighted}</code></pre></div>`;
+    panelsEl.appendChild(panel);
+  });
+
+  setState('done');
+}
+
+/* ── Tab switch ── */
+function switchTab(name) {
+  const sid = safeId(name);
+  document.querySelectorAll('.file-tab').forEach(t =>
+    t.classList.toggle('active', t.dataset.file === name)
+  );
+  document.querySelectorAll('.file-panel').forEach(p =>
+    p.classList.toggle('active', p.id === `fp_${sid}`)
+  );
+}
+
+/* ── Copy ── */
+async function copyFile(name, sid) {
+  try {
+    await navigator.clipboard.writeText(files[name]);
+    const btn = $(`cpbtn_${sid}`);
+    if (btn) {
+      btn.classList.add('copied');
+      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Kopiert`;
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Kopieren`;
+      }, 1800);
+    }
+  } catch (_) {}
+}
+
+async function copyAll() {
+  const text = Object.entries(files)
+    .map(([n, c]) => `========== ${n} ==========\n${c}`)
+    .join('\n\n');
+  try {
+    await navigator.clipboard.writeText(text);
+    const btn = $('copyAllBtn');
+    btn.classList.add('copied');
+    btn.textContent = '✓ Kopiert';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Alle kopieren`;
+    }, 1800);
+  } catch (_) {}
 }
 </script>
 </body>
